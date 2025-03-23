@@ -6,7 +6,6 @@ public class CameraScript : MonoBehaviour
 {
     private Transform playerOrientation;
 
-    // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -15,7 +14,6 @@ public class CameraScript : MonoBehaviour
         playerOrientation = GameObject.Find("PlayerOrientation").transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
         // rotate orientation of the player

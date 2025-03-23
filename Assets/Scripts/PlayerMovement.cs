@@ -5,8 +5,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // setted from unity
-    [SerializeField] private float movementSpeed;
-    [SerializeField] private float rotationSpeed;
     [SerializeField] private Transform playerObject;
 
     // loaded once
@@ -17,7 +15,17 @@ public class PlayerMovement : MonoBehaviour
     // used in update
     private float horInput;
     private float verInput;
-    private Vector3 moveDirection;
+    private float currentSpeed;
+    private bool isGrounded;
+    private bool wasGrounded;
+    private Vector3 groundDirection;
+    private Vector3 airDirection;
+
+    // fixed
+    private float movementSpeed = 7f;
+    private float rotationSpeed = 7f;
+    private float gravityValue = -9.81f;
+    private float jumpHeight = 2.0f;
 
     void Start()
     {
@@ -30,26 +38,90 @@ public class PlayerMovement : MonoBehaviour
     {
         horInput = Input.GetAxis("Horizontal");
         verInput = Input.GetAxis("Vertical");
+        groundDirection = playerOrientation.forward * verInput + playerOrientation.right * horInput;
 
-        // move the player
-        moveDirection = playerOrientation.forward * verInput + playerOrientation.right * horInput;
+        wasGrounded = isGrounded;
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.01f);
 
-        if (moveDirection != Vector3.zero)
+
+        // è a terra
+        if (isGrounded)
         {
-            animator.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+
+            // è appena atterrato
+            if(!wasGrounded)
+            {
+                airDirection = Vector3.zero;
+
+                animator.CrossFade("Empty", 0.2f); // landing
+            }
+
+
+            // ha appena iniziato il salto
+            if (Input.GetKey(KeyCode.Space))
+            {
+                // da fermo
+                if (groundDirection == Vector3.zero)
+                {
+                    airDirection = Vector3.zero;
+                }
+                // in movimento
+                else
+                {
+                    airDirection = playerObject.forward * currentSpeed;
+                }
+
+                airDirection.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
+
+            }
+
+
+            // si sposta a terra
+            if (groundDirection != Vector3.zero)
+            {
+                if (!Input.GetKey(KeyCode.LeftShift))
+                {
+                    animator.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+                    currentSpeed = movementSpeed;
+                }
+                else
+                {
+                    animator.SetFloat("Speed", 1f, 0.1f, Time.deltaTime);
+                    currentSpeed = movementSpeed * 2;
+                }
+
+                controller.Move(groundDirection * currentSpeed * Time.deltaTime);
+
+                // rotate the player object
+                playerObject.forward = Vector3.Slerp(playerObject.forward, groundDirection.normalized, Time.deltaTime * rotationSpeed);
+
+            }
+            // è fermo a terra
+            else
+            {
+                animator.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
+            }
+
         }
+        // è in volo
         else
         {
-            animator.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
+            airDirection.y += gravityValue * Time.deltaTime;
+
+            // ha appena iniziato il salto o ha iniato a cadere
+            if (wasGrounded)
+            {
+                animator.CrossFade("Falling", 0.2f);
+
+                if (groundDirection != Vector3.zero)
+                {
+                    airDirection.x = playerObject.forward.x * currentSpeed; // improve with more phisics
+                    airDirection.z = playerObject.forward.z * currentSpeed; // improve with more phisics
+                }
+            }
         }
 
-        controller.Move(moveDirection.normalized * movementSpeed * Time.deltaTime);
-
-        // rotate the player object
-        if (moveDirection != Vector3.zero)
-        {
-            playerObject.forward = Vector3.Slerp(playerObject.forward, moveDirection.normalized, Time.deltaTime * rotationSpeed);
-        }
+        controller.Move(airDirection * Time.deltaTime);
 
     }
 }
