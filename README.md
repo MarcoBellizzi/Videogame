@@ -1,2 +1,0 @@
-# Unity tutorial funzionalità base
-
