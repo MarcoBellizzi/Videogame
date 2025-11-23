@@ -1,0 +1,7 @@
+
+- creare una piccola strada dritta dopo di che c'è una tizia che dice di seguirla correndo.
+
+- dopo c'è un salto, creare una piccola buca in cui il personaggio può cadere.
+
+- stessa cosa di prima in cui il salto è correndo.
+
