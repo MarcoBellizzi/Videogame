@@ -16,7 +16,7 @@ public class CameraScript : MonoBehaviour
 
     void Update()
     {
-        // rotate orientation of the player
+        // un vettore che parte dalla telecamera e finisce al player (ignorando l'asse verticale)
         playerOrientation.forward = (playerOrientation.position - new Vector3(transform.position.x, playerOrientation.position.y, transform.position.z)).normalized;
     }
 

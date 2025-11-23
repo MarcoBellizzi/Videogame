@@ -63,15 +63,12 @@ public class PlayerMovement : MonoBehaviour
         // è a terra
         if (isGrounded)
         {
-
             // è appena atterrato
             if(!wasGrounded)
             {
                 airDirection = Vector3.zero;
-
                 animator.CrossFade("Empty", 0.2f); // landing
             }
-
 
             // ha appena iniziato il salto
             if (jump)
@@ -90,7 +87,6 @@ public class PlayerMovement : MonoBehaviour
                 airDirection.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
 
             }
-
 
             // si sposta a terra
             if (groundDirection != Vector3.zero)

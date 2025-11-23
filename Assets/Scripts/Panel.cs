@@ -21,12 +21,19 @@ public class Panel : MonoBehaviour
         {
             "benvenuto", new List<(string, string)> {
                 ("Sviluppatore", "Benvenuto in questo gioco. Muovi il mouse per guandarti intorno. Clicca per proseguire."),
-                ("Sviluppatore", "Usati i tasti AWDS per spostarti, vai verso la ragazza.")
+                ("Sviluppatore", "Usa i tasti AWDS per spostarti, vai verso la ragazza.")
+            }
+        },
+        {
+            "ragazza_0", new List<(string, string)> {
+                ("Ragazza", "Ciao, sai che se premi shift mentre cammini corri?"),
+                ("Ragazza", "Vediamo se riesci a prendermi."),
             }
         },
         {
             "ragazza_1", new List<(string, string)> {
-                ("ragazza", "Ciao, sai che se premi shift mentre cammini corri? Prova a prendermi."),
+                ("Ragazza", "Ottimo. Con la tasto SPACE salti. Se sei fermo salti in alto, se ti muovi salti in avanti."),
+                ("Ragazza", "Salta questo ostacolo."),
             }
         }
     };

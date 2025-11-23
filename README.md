@@ -22,6 +22,10 @@ Su VS Code invece bisogna installare i seguenti plug-in
 
 Se tutto è corretto Dovresti avere attive l'Intellisense sugli script C# generati da Unity.
 
+### Animazioni
+
+Per le animazioni bisogno scaricare prima il modello, un file .fbx e metterlo dentro la cartella Models. A questo modello poi si attacca un animator che ne gestisce le animazioni. Ogni animazione che il modello intende fare va scaricata a parte e messa dentro la relativa cartella in Animations.
+
 ### Personaggio
 
 Per la creazione di un personaggio base sono stati utilizzati modelli e animazione importati da Mixamo.
