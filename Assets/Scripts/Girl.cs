@@ -1,14 +1,13 @@
 using UnityEngine;
 
-public class Woman : MonoBehaviour
+public class Girl : MonoBehaviour
 {
-
-    private int stato;
+    private int state;
     private Animator animator;
 
     void Start()
     { 
-        stato = 0;     
+        state = 0;     
         animator = GetComponentInChildren<Animator>();
     }
 
@@ -17,33 +16,45 @@ public class Woman : MonoBehaviour
         
     }
 
-    void Sposta_0()
+    void Move_0()
     {
-        stato += 1;
+        state += 1;
         transform.position = new Vector3(0, 0, 45);
         animator.CrossFade("Waving", 0.2f);
     }
 
-    void Sposta_1()
+    void Move_1()
     {
-        stato += 1;
+        state += 1;
         transform.position = new Vector3(0, 0, 55);
+        animator.CrossFade("Waving", 0.2f);
+    }
+
+    void Move_2()
+    {
+        state += 1;
         animator.CrossFade("Waving", 0.2f);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         
-        if (stato == 0)
+        if (state == 0)
         {
             animator.CrossFade("Talking", 0.2f);
-            Panel.Instance.Mostra("ragazza_0", this.Sposta_0);
+            PanelDialogues.instance.Show("girl_0", this.Move_0);
         }
 
-        if (stato == 1)
+        if (state == 1)
         {
             animator.CrossFade("Talking", 0.2f);
-            Panel.Instance.Mostra("ragazza_1", this.Sposta_1);
+            PanelDialogues.instance.Show("girl_1", this.Move_1);
+        }
+
+        if (state == 2)
+        {
+            animator.CrossFade("Talking", 0.2f);
+            PanelDialogues.instance.Show("girl_2", this.Move_2);
         }
     }
 

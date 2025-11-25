@@ -14,9 +14,7 @@ dotnet --version
 
 Su VS Code invece bisogna installare i seguenti plug-in
 
-* IntelliCode for C# Dev Kit
-  * C# Dev Kit
-  * C#
+* C# Dev Kit
 * Unity
 * Unity Tools
 
