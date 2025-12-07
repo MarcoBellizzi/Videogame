@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PanelBag : MonoBehaviour
 {
@@ -9,12 +10,13 @@ public class PanelBag : MonoBehaviour
     void Awake()
     {
         instance = this;
+        content = GameObject.Find("BagContent").GetComponent<TextMeshProUGUI>();
+        this.gameObject.SetActive(false);
     }
 
     void Start()
     {
-        content = GameObject.Find("BagContent").GetComponent<TextMeshProUGUI>();
-        gameObject.SetActive(false);
+        
     }
 
     void Update()
@@ -23,7 +25,6 @@ public class PanelBag : MonoBehaviour
         {
             content.text = "Lo zaino è vuoto";
         }
-        
         else
         {
             content.text = "";
@@ -34,7 +35,13 @@ public class PanelBag : MonoBehaviour
                 content.text += key;
                 content.text += "\n";
             }
+        }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        { 
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene("Menu");
         }
     }
 }

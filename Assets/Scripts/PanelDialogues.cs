@@ -17,10 +17,6 @@ public class PanelDialogues : MonoBehaviour
     void Awake()
     {
         instance = this;
-    }
-    
-    void Start()
-    {
         person = GameObject.Find("PersonName").GetComponent<TextMeshProUGUI>();
         content = GameObject.Find("DialogueContent").GetComponent<TextMeshProUGUI>();
 
@@ -28,8 +24,8 @@ public class PanelDialogues : MonoBehaviour
         {
             {
                 "welcome", new List<(string, string)> {
-                    ("Sviluppatore", "Benvenuto in questo gioco. Muovi il mouse per guandarti intorno. Clicca per proseguire."),
-                    ("Sviluppatore", "Usa i tasti AWDS per spostarti, vai verso la ragazza.")
+                    ("Ragazza", "Benvenuto in questo gioco. Muovi il mouse per guandarti intorno. Clicca per proseguire."),
+                    ("Ragazza", "Usa i tasti AWDS per spostarti, vieni verso di me.")
                 }
             },
             {
@@ -48,11 +44,15 @@ public class PanelDialogues : MonoBehaviour
                 "girl_2", new List<(string, string)> {
                     ("Ragazza", "Puoi raccogliere alcuni degli oggetti che trovi. Prova a passare sopra e raccogliere questi oggetti."),
                     ("Ragazza", "Se premi il tasto P aprirai un pannello che ti mostrerà tutti gli oggetti che hai nello zaino."),
+                    ("Ragazza", "Se il pannello dello zaino è aperto puoi premere ESC per tornare al menù principale."),
                 }
             }
         };
-
-        Show("welcome");
+    }
+    
+    void Start()
+    {
+        
     }
 
     void Update()
@@ -75,6 +75,7 @@ public class PanelDialogues : MonoBehaviour
                 {
                     content.text = string.Empty;
                     this.gameObject.SetActive(false);
+                    Player.instance.canMove = true;
                     if (functionToCall != null)
                     {
                         functionToCall?.Invoke();
@@ -93,6 +94,7 @@ public class PanelDialogues : MonoBehaviour
     public void Show(string newState, Action function = null)
     {
         this.gameObject.SetActive(true);
+        Player.instance.canMove = false;
         state = newState;
         index = 0;
         functionToCall = function;

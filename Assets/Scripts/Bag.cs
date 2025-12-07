@@ -9,18 +9,20 @@ public class Bag : MonoBehaviour
     void Awake()
     {
         instance = this;
+        items = new Dictionary<string, int>();
     }
 
     void Start()
     {
-        items = new Dictionary<string, int>();
+        
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && !PanelDialogues.instance.gameObject.activeSelf && !PanelObjects.instance.gameObject.activeSelf)
         {
             PanelBag.instance.gameObject.SetActive(! PanelBag.instance.gameObject.activeSelf);
+            Player.instance.canMove = ! Player.instance.canMove;
         }
     }
 

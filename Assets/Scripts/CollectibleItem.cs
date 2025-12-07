@@ -10,6 +10,7 @@ public class CollectibleItem : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Bag.instance.AddItem(itemName);
+        PanelObjects.instance.Show(itemName);
         Destroy(this.gameObject);
     }
 }

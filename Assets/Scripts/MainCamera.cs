@@ -2,10 +2,15 @@
 
 public class MainCamera : MonoBehaviour
 {
-    void Start()
+
+    void Awake()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+    void Start()
+    {
+        
     }
 
     void Update()

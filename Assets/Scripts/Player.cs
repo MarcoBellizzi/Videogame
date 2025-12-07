@@ -3,6 +3,8 @@
 public class Player : MonoBehaviour
 {
     public static Player instance;
+    [HideInInspector] public Transform playerOrientation;
+    [HideInInspector] public bool canMove;
 
     // setted from unity
     [SerializeField] private Transform playerModel;
@@ -10,7 +12,6 @@ public class Player : MonoBehaviour
     // loaded once
     private CharacterController controller;
     private Animator animator;
-    [HideInInspector] public Transform playerOrientation;
 
     // used in update
     private float horInput;
@@ -32,19 +33,21 @@ public class Player : MonoBehaviour
     void Awake()
     {
         instance = this;
+        controller = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
+        playerOrientation = GameObject.Find("PlayerOrientation").transform;
+        canMove = true;
     }
 
     void Start()
     {
-        controller = GetComponent<CharacterController>();
-        animator = GetComponentInChildren<Animator>();
-        playerOrientation = GameObject.Find("PlayerOrientation").transform;
+        PanelDialogues.instance.Show("welcome");
     }
 
     void Update()
     {
         // è attivo il pannello di una conversazione
-        if (PanelDialogues.instance.GetActive())
+        if (!canMove)
         {
             horInput = 0;
             verInput = 0;

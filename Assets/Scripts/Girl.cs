@@ -5,10 +5,15 @@ public class Girl : MonoBehaviour
     private int state;
     private Animator animator;
 
-    void Start()
-    { 
+    void Awake()
+    {
         state = 0;     
         animator = GetComponentInChildren<Animator>();
+    }
+
+    void Start()
+    {
+        
     }
 
     void Update()
