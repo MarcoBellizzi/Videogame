@@ -14,11 +14,6 @@ public class PanelBag : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (Bag.instance.items.Count == 0)

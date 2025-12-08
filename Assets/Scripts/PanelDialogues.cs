@@ -31,28 +31,37 @@ public class PanelDialogues : MonoBehaviour
             {
                 "girl_0", new List<(string, string)> {
                     ("Ragazza", "Ciao, sai che se premi SHIFT mentre cammini corri?"),
-                    ("Ragazza", "Vediamo se riesci a prendermi."),
+                    ("Ragazza", "Vediamo se riesci a prendermi.")
                 }
             },
             {
                 "girl_1", new List<(string, string)> {
                     ("Ragazza", "Ottimo. Con la tasto SPACE salti. Se sei fermo salti in alto, se ti muovi salti in avanti."),
-                    ("Ragazza", "Salta questo ostacolo."),
+                    ("Ragazza", "Salta questo ostacolo.")
                 }
             },
             {
                 "girl_2", new List<(string, string)> {
                     ("Ragazza", "Puoi raccogliere alcuni degli oggetti che trovi. Prova a passare sopra e raccogliere questi oggetti."),
                     ("Ragazza", "Se premi il tasto P aprirai un pannello che ti mostrerà tutti gli oggetti che hai nello zaino."),
-                    ("Ragazza", "Se il pannello dello zaino è aperto puoi premere ESC per tornare al menù principale."),
+                    ("Ragazza", "Se il pannello dello zaino è aperto puoi premere ESC per tornare al menù principale.")
+                }
+            },
+            {
+                "girl_3", new List<(string, string)> {
+                    ("Ragazza", "Se premi il tasto Q cambi tipo di videocamera."),
+                    ("Ragazza", "Mirerai un obbiettivo e non lo perderai d'occhio. Prova a tenere d'occhio quel cilindro li a destra"),
+                    ("Ragazza", "Premi di nuovo Q per tornare alla camera normale.")
+                }
+            },
+            {
+                "girl_4", new List<(string, string)> {
+                    ("Ragazza", "Se premi il tasto E cambi di nuovo tipo di videocamera."),
+                    ("Ragazza", "Questa è una telecamera di tipo fps, ottima per sparare."),
+                    ("Ragazza", "Premi di nuovo E per tornare alla camera normale.")
                 }
             }
         };
-    }
-    
-    void Start()
-    {
-        
     }
 
     void Update()

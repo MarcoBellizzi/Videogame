@@ -4,10 +4,11 @@ public class Player : MonoBehaviour
 {
     public static Player instance;
     [HideInInspector] public Transform playerOrientation;
+    [HideInInspector] public Transform toFollowVirtual;
     [HideInInspector] public bool canMove;
 
     // setted from unity
-    [SerializeField] private Transform playerModel;
+    [SerializeField] public Transform playerModel;
 
     // loaded once
     private CharacterController controller;
@@ -26,7 +27,7 @@ public class Player : MonoBehaviour
 
     // fixed
     private float movementSpeed = 7f;
-    private float rotationSpeed = 7f;
+    private float rotationSpeed = 7f;  // collegare alla main camera che lo usa
     private float gravityValue = -9.81f;
     private float jumpHeight = 2.0f;
 
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         playerOrientation = GameObject.Find("PlayerOrientation").transform;
+        toFollowVirtual = GameObject.Find("ToFollowVirtual").transform;
         canMove = true;
     }
 
@@ -112,9 +114,13 @@ public class Player : MonoBehaviour
 
                 controller.Move(groundDirection * currentSpeed * Time.deltaTime);
 
-                // rotate the player object
-                playerModel.forward = Vector3.Slerp(playerModel.forward, groundDirection.normalized, Time.deltaTime * rotationSpeed);
+                if (MainCamera.instance.state != CamState.FPSCAM)
+                {
+                    // rotate the player model
+                    playerModel.forward = Vector3.Slerp(playerModel.forward, groundDirection.normalized, Time.deltaTime * rotationSpeed);
+                }
 
+                
             }
             // è fermo a terra
             else

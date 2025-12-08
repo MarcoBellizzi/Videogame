@@ -17,8 +17,4 @@ public class Headphones : MonoBehaviour
         source.Play();
     }
 
-    void Update()
-    {
-        
-    }
 }

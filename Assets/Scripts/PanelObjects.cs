@@ -14,11 +14,6 @@ public class PanelObjects : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))

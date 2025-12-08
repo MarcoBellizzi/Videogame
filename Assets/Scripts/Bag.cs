@@ -12,11 +12,6 @@ public class Bag : MonoBehaviour
         items = new Dictionary<string, int>();
     }
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P) && !PanelDialogues.instance.gameObject.activeSelf && !PanelObjects.instance.gameObject.activeSelf)
