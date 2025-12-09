@@ -60,6 +60,12 @@ public class PanelDialogues : MonoBehaviour
                     ("Ragazza", "Questa è una telecamera di tipo fps, ottima per sparare."),
                     ("Ragazza", "Premi di nuovo E per tornare alla camera normale.")
                 }
+            },
+            {
+                "girl_5", new List<(string, string)> {
+                    ("Ragazza", "Mentre sei con latelecamera base o la telecamera in lock puoi tirare un pugno se clicchi con il tasto sinistro."),
+                    ("Ragazza", "Prova a distruggere quel cilindo."),
+                }
             }
         };
     }
@@ -84,11 +90,12 @@ public class PanelDialogues : MonoBehaviour
                 {
                     content.text = string.Empty;
                     this.gameObject.SetActive(false);
-                    Player.instance.canMove = true;
                     if (functionToCall != null)
                     {
                         functionToCall?.Invoke();
                     }
+                    Player.instance.canMove = true;
+                    Player.instance.canPunchNext = true;
                 }
             }
             else
@@ -102,11 +109,12 @@ public class PanelDialogues : MonoBehaviour
 
     public void Show(string newState, Action function = null)
     {
-        this.gameObject.SetActive(true);
         Player.instance.canMove = false;
-        state = newState;
+        Player.instance.canPunch = false;
         index = 0;
+        state = newState;
         functionToCall = function;
+        this.gameObject.SetActive(true);
         StartCoroutine(Write(dialogues[state][index]));
     }
 
@@ -116,7 +124,7 @@ public class PanelDialogues : MonoBehaviour
         foreach(char c in tuple.con)
         {
             content.text += c;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 

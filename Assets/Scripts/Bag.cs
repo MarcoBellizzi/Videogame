@@ -16,8 +16,19 @@ public class Bag : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P) && !PanelDialogues.instance.gameObject.activeSelf && !PanelObjects.instance.gameObject.activeSelf)
         {
-            PanelBag.instance.gameObject.SetActive(! PanelBag.instance.gameObject.activeSelf);
-            Player.instance.canMove = ! Player.instance.canMove;
+            if (!PanelBag.instance.gameObject.activeSelf)
+            {
+                PanelBag.instance.gameObject.SetActive(true);
+                Player.instance.canMove = false;
+                Player.instance.canPunch = false;
+            }
+            else
+            {
+                PanelBag.instance.gameObject.SetActive(false);
+                Player.instance.canMove = true;
+                Player.instance.canPunch = true;
+            }
+            
         }
     }
 

@@ -1,3 +1,5 @@
-- procedere con l'attacco base
+- minirino e zoom
 
 - procedere con l'attacco a distanza
+
+- esempio di combattimento (boss finale)

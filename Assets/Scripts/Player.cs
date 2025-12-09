@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public Transform playerOrientation;
     [HideInInspector] public Transform toFollowVirtual;
     [HideInInspector] public bool canMove;
+    [HideInInspector] public bool canPunch;
+    [HideInInspector] public bool canPunchNext;
 
     // setted from unity
     [SerializeField] public Transform playerModel;
@@ -39,6 +41,8 @@ public class Player : MonoBehaviour
         playerOrientation = GameObject.Find("PlayerOrientation").transform;
         toFollowVirtual = GameObject.Find("ToFollowVirtual").transform;
         canMove = true;
+        canPunch = true;
+        canPunchNext = false;
     }
 
     void Start()
@@ -48,6 +52,18 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && canPunch)
+        {
+            animator.SetTrigger("punch");
+        }
+
+        if (canPunchNext)
+        {
+            canPunch = true;
+            canPunchNext = false;
+        }
+
         // è attivo il pannello di una conversazione
         if (!canMove)
         {

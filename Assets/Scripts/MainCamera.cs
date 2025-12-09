@@ -18,20 +18,19 @@ public class MainCamera : MonoBehaviour
 
     [HideInInspector] public CamState state;
 
-    public Transform lockTarget; // da aggiornare per prenderlo dinamicamente
-
-    [SerializeField] private float locCamBack;
-    [SerializeField] private float locCamUp;
-    [SerializeField] private float fpsCamBack;
-    [SerializeField] private float fpsCamUp;
-    [SerializeField] private float fpsCamRight;
-    [SerializeField] private float sensibilitaX = 180f;
-    [SerializeField] private float sensibilitaY = 180f;
-    [SerializeField] private float pitchMin = -85f;
-    [SerializeField] private float pitchMax = 85f;
-
     private float yaw;
     private float pitch;
+
+    private float locCamBack = 0f;
+    private float locCamUp = 0f;
+    private float fpsCamBack = 2f;
+    private float fpsCamUp = 1.5f;
+    private float fpsCamRight = 0.6f;
+    private float sensibilitaX = 180f;
+    private float sensibilitaY = 180f;
+    private float pitchMin = -85f;
+    private float pitchMax = 85f;
+    private float maxLockDistance = 40f;
 
 
     void Awake()
@@ -67,17 +66,17 @@ public class MainCamera : MonoBehaviour
         {
             // AGGIORNA L'ORIENTAMENTO DEL PLAYER IN BASE AL TARGET
             Player.instance.playerOrientation.transform.forward = 
-                (lockTarget.position - 
+                (lockOnCam.LookAt.position - 
                     new Vector3(
                         Player.instance.transform.position.x,
-                        lockTarget.position.y,
+                        lockOnCam.LookAt.position.y,
                         Player.instance.transform.position.z
                     )
                 ).normalized;
 
             // AGGIORNA POSIZIONE E ORIENTAMENTE DELLA CAMERA IN BASE AL TARGET E AL PLAYER
             Player.instance.toFollowVirtual.transform.forward =
-                (lockTarget.position - Player.instance.transform.position).normalized;
+                (lockOnCam.LookAt.position - Player.instance.transform.position).normalized;
 
             Player.instance.toFollowVirtual.transform.position =
                 Player.instance.transform.position
@@ -107,14 +106,32 @@ public class MainCamera : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            
             if (state != CamState.LOCKONCAM)
             {
-                state = CamState.LOCKONCAM;
-                freeLookCam.Priority = 0;
-                lockOnCam.Priority = 10;
-                fpsCam.Priority = 0;
+                Transform best = null;
+                float bestDistSq = float.PositiveInfinity;
 
-                lockOnCam.LookAt = lockTarget;
+                foreach (Collider collider in Physics.OverlapSphere(Player.instance.transform.position, maxLockDistance, 1 << LayerMask.NameToLayer("CanLock")))
+                {
+                    float d2 = (collider.transform.position - Player.instance.transform.position).sqrMagnitude;
+                    if (d2 < bestDistSq)
+                    {
+                        bestDistSq = d2;
+                        best = collider.gameObject.transform;
+                    }
+                }
+
+                if (best != null)
+                {
+                    lockOnCam.LookAt = best;
+
+                    state = CamState.LOCKONCAM;
+                    freeLookCam.Priority = 0;
+                    lockOnCam.Priority = 10;
+                    fpsCam.Priority = 0;
+                }
+
             }
             else
             {

@@ -52,6 +52,14 @@ public class Girl : MonoBehaviour
     void Move_4()
     {
         state += 1;
+        transform.position = new Vector3(0, 0, 100);
+        animator.CrossFade("Waving", 0.2f);
+    }
+
+    void Move_5()
+    {
+        state += 1;
+        transform.position = new Vector3(0, 0, 120);
         animator.CrossFade("Waving", 0.2f);
     }
 
@@ -86,6 +94,12 @@ public class Girl : MonoBehaviour
         {
             animator.CrossFade("Talking", 0.2f);
             PanelDialogues.instance.Show("girl_4", this.Move_4);
+        }
+
+        if (state == 5)
+        {
+            animator.CrossFade("Talking", 0.2f);
+            PanelDialogues.instance.Show("girl_5", this.Move_5);
         }
     }
 

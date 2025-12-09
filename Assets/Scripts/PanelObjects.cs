@@ -20,6 +20,7 @@ public class PanelObjects : MonoBehaviour
         {
             this.gameObject.SetActive(false);
             Player.instance.canMove = true;
+            Player.instance.canPunchNext = true;
         }
     }
 
@@ -28,5 +29,6 @@ public class PanelObjects : MonoBehaviour
         objectName.text = name;
         this.gameObject.SetActive(true);
         Player.instance.canMove = false;
+        Player.instance.canPunch = false;
     }
 }
