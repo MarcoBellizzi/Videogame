@@ -7,7 +7,6 @@ public class PunchState : StateMachineBehaviour
    {
       Player.instance.canMove = false;
       Player.instance.canPunch = false;
-      GameObject.Find("Punch").GetComponent<SphereCollider>().enabled = true;
    }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -21,7 +20,6 @@ public class PunchState : StateMachineBehaviour
    {
       Player.instance.canMove = true;
       Player.instance.canPunch = true;
-      GameObject.Find("Punch").GetComponent<SphereCollider>().enabled = false;
    }
 
 

@@ -1,3 +1,5 @@
+- collider del pugno da un certo frame in poi
+
 - minirino e zoom
 
 - procedere con l'attacco a distanza
