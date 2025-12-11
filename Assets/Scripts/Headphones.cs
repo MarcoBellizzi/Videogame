@@ -14,7 +14,7 @@ public class Headphones : MonoBehaviour
     void Start()
     {
         source.clip = sottofondo;
-        source.Play();
+        // source.Play();
     }
 
 }

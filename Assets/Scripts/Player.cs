@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -8,13 +9,13 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool canMove;
     [HideInInspector] public bool canPunch;
     [HideInInspector] public bool canPunchNext;
+    [HideInInspector] public Animator animator;
 
     // setted from unity
     [SerializeField] public Transform playerModel;
 
     // loaded once
     private CharacterController controller;
-    private Animator animator;
 
     // used in update
     private float horInput;
@@ -29,7 +30,7 @@ public class Player : MonoBehaviour
 
     // fixed
     private float movementSpeed = 7f;
-    private float rotationSpeed = 7f;  // collegare alla main camera che lo usa
+    private float rotationSpeed = 7f;
     private float gravityValue = -9.81f;
     private float jumpHeight = 2.0f;
 
@@ -47,24 +48,26 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        isGrounded = true;
         PanelDialogues.instance.Show("welcome");
     }
 
     void Update()
     {
-
+        // tira un pugno
         if (Input.GetKeyDown(KeyCode.Mouse0) && canPunch)
         {
             animator.SetTrigger("punch");
         }
 
+        // evita di tirare un pugno quando chiudo lo schermo di una conversazione o degli oggetti
         if (canPunchNext)
         {
             canPunch = true;
             canPunchNext = false;
         }
 
-        // è attivo il pannello di una conversazione
+        // è attivo un pannello
         if (!canMove)
         {
             horInput = 0;
@@ -72,12 +75,16 @@ public class Player : MonoBehaviour
             jump = false;
             run = false;
         }
+        // non sono attivi pannelli
         else
         {
             horInput = Input.GetAxis("Horizontal");
             verInput = Input.GetAxis("Vertical");
             jump = Input.GetKey(KeyCode.Space);
             run = Input.GetKey(KeyCode.LeftShift);
+
+            animator.SetFloat("oxInput", horInput, 0.1f, Time.deltaTime);
+            animator.SetFloat("vxInput", verInput, 0.1f, Time.deltaTime);
         }
         
         groundDirection = playerOrientation.forward * verInput + playerOrientation.right * horInput;
@@ -93,21 +100,35 @@ public class Player : MonoBehaviour
             if(!wasGrounded)
             {
                 airDirection = Vector3.zero;
-                animator.CrossFade("Empty", 0.2f); // landing
+
+                if (MainCamera.instance.state != CamState.FPSCAM)
+                {
+                    animator.SetTrigger("blend");
+                }
+                else
+                {
+                    animator.SetTrigger("blendFPS");
+                }
             }
 
             // ha appena iniziato il salto
             if (jump)
             {
-                // da fermo
-                if (groundDirection == Vector3.zero)
+                
+                if (MainCamera.instance.state != CamState.FPSCAM)
                 {
-                    airDirection = Vector3.zero;
+                    if (groundDirection != Vector3.zero)
+                    {
+                        airDirection = playerModel.forward * currentSpeed;
+                    }
+                    else
+                    {
+                       airDirection = Vector3.zero;
+                    }
                 }
-                // in movimento
                 else
                 {
-                    airDirection = playerModel.forward * currentSpeed;
+                    airDirection = groundDirection * currentSpeed;
                 }
 
                 airDirection.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
@@ -135,8 +156,6 @@ public class Player : MonoBehaviour
                     // rotate the player model
                     playerModel.forward = Vector3.Slerp(playerModel.forward, groundDirection.normalized, Time.deltaTime * rotationSpeed);
                 }
-
-                
             }
             // è fermo a terra
             else
@@ -150,15 +169,25 @@ public class Player : MonoBehaviour
         {
             airDirection.y += gravityValue * Time.deltaTime;
 
-            // ha appena iniziato il salto o ha iniziato a cadere
+            // ha iniziato a cadere o ha appena iniziato il salto
             if (wasGrounded)
-            {
-                animator.CrossFade("Falling", 0.2f);
-
-                if (groundDirection != Vector3.zero)
+            {   
+                
+                animator.SetTrigger("jump");
+                
+                if (MainCamera.instance.state != CamState.FPSCAM)
                 {
-                    airDirection.x = playerModel.forward.x * currentSpeed; // improve with more phisics
-                    airDirection.z = playerModel.forward.z * currentSpeed; // improve with more phisics
+                    if (groundDirection != Vector3.zero)
+                    {
+                        airDirection.x = playerModel.forward.x * currentSpeed;
+                        airDirection.z = playerModel.forward.z * currentSpeed;
+                    }
+
+                }
+                else
+                {
+                    airDirection.x = groundDirection.x * currentSpeed;
+                    airDirection.z = groundDirection.z * currentSpeed;
                 }
             }
         }

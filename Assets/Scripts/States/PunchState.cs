@@ -3,12 +3,12 @@ using UnityEngine;
 public class PunchState : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-       Player.instance.canMove = false;
-       Player.instance.canPunch = false;
-       GameObject.Find("PunchBox").GetComponent<CapsuleCollider>().enabled = true;
-    }
+   override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+   {
+      Player.instance.canMove = false;
+      Player.instance.canPunch = false;
+      GameObject.Find("Punch").GetComponent<SphereCollider>().enabled = true;
+   }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -17,12 +17,13 @@ public class PunchState : StateMachineBehaviour
     //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-       Player.instance.canMove = true;
-       Player.instance.canPunch = true;
-       GameObject.Find("PunchBox").GetComponent<CapsuleCollider>().enabled = false;
-    }
+   override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+   {
+      Player.instance.canMove = true;
+      Player.instance.canPunch = true;
+      GameObject.Find("Punch").GetComponent<SphereCollider>().enabled = false;
+   }
+
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

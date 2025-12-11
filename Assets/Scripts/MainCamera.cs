@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
 using UnityEngine;
 
 public enum CamState
@@ -23,7 +24,7 @@ public class MainCamera : MonoBehaviour
 
     private float locCamBack = 0f;
     private float locCamUp = 0f;
-    private float fpsCamBack = 2f;
+    private float fpsCamBack = 3f;
     private float fpsCamUp = 1.5f;
     private float fpsCamRight = 0.6f;
     private float sensibilitaX = 180f;
@@ -86,7 +87,6 @@ public class MainCamera : MonoBehaviour
 
         if (state == CamState.FPSCAM)
         {
-            
             yaw   += Input.GetAxis("Mouse X") * sensibilitaX * Time.deltaTime;
             pitch -= Input.GetAxis("Mouse Y") * sensibilitaY * Time.deltaTime;
             pitch  = Mathf.Clamp(pitch, pitchMin, pitchMax);
@@ -106,39 +106,17 @@ public class MainCamera : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            
             if (state != CamState.LOCKONCAM)
-            {
-                Transform best = null;
-                float bestDistSq = float.PositiveInfinity;
-
-                foreach (Collider collider in Physics.OverlapSphere(Player.instance.transform.position, maxLockDistance, 1 << LayerMask.NameToLayer("CanLock")))
-                {
-                    float d2 = (collider.transform.position - Player.instance.transform.position).sqrMagnitude;
-                    if (d2 < bestDistSq)
-                    {
-                        bestDistSq = d2;
-                        best = collider.gameObject.transform;
-                    }
-                }
-
+            { 
+                Transform best = GetBest();
                 if (best != null)
                 {
-                    lockOnCam.LookAt = best;
-
-                    state = CamState.LOCKONCAM;
-                    freeLookCam.Priority = 0;
-                    lockOnCam.Priority = 10;
-                    fpsCam.Priority = 0;
-                }
-
+                    MoveToLockOnCamera(best);
+                } 
             }
             else
             {
-                state = CamState.FREE_LOOK_CAM;
-                freeLookCam.Priority = 10;
-                lockOnCam.Priority = 0;
-                fpsCam.Priority = 0;
+                MoveToFreeLookCamera();
             }
         }
 
@@ -146,17 +124,11 @@ public class MainCamera : MonoBehaviour
         {
             if (state != CamState.FPSCAM)
             {
-                state = CamState.FPSCAM;
-                freeLookCam.Priority = 0;
-                lockOnCam.Priority = 0;
-                fpsCam.Priority = 10;
+                MoveToFpsCamera();
             }
             else
             {
-                state = CamState.FREE_LOOK_CAM;
-                freeLookCam.Priority = 10;
-                lockOnCam.Priority = 0;
-                fpsCam.Priority = 0;
+                MoveToFreeLookCamera();
             }
         }
     
@@ -174,6 +146,79 @@ public class MainCamera : MonoBehaviour
                 - fpsCamBack * fpsCam.transform.forward
                 + fpsCamUp * fpsCam.transform.up
                 + fpsCamRight * fpsCam.transform.right;
+        }
+    }
+
+    public Transform GetBest()
+    {
+        Transform best = null;
+        float bestDistSq = float.PositiveInfinity;
+
+        foreach (Collider collider in Physics.OverlapSphere(Player.instance.transform.position, maxLockDistance, 1 << LayerMask.NameToLayer("CanLock")))
+        {
+            float d2 = (collider.transform.position - Player.instance.transform.position).sqrMagnitude;
+            if (d2 < bestDistSq)
+            {
+                bestDistSq = d2;
+                best = collider.gameObject.transform;
+            }
+        }
+
+        return best;
+    }
+
+    public void MoveToFreeLookCamera()
+    {
+        if (state == CamState.LOCKONCAM)
+        {
+            state = CamState.FREE_LOOK_CAM;
+            freeLookCam.Priority = 10;
+            lockOnCam.Priority = 0;
+            fpsCam.Priority = 0;
+        }
+        if (state == CamState.FPSCAM)
+        {
+            state = CamState.FREE_LOOK_CAM;
+            freeLookCam.Priority = 10;
+            lockOnCam.Priority = 0;
+            fpsCam.Priority = 0;
+            Player.instance.animator.SetTrigger("blend");
+            Player.instance.canPunch = true;
+        }
+    }
+
+    public void MoveToLockOnCamera(Transform target)
+    {
+        if (state == CamState.FREE_LOOK_CAM)
+        {
+            state = CamState.LOCKONCAM;
+            freeLookCam.Priority = 0;
+            lockOnCam.Priority = 10;
+            fpsCam.Priority = 0;
+            lockOnCam.LookAt = target;
+        }
+        if (state == CamState.FPSCAM)
+        {
+            state = CamState.LOCKONCAM;
+            freeLookCam.Priority = 10;
+            lockOnCam.Priority = 0;
+            fpsCam.Priority = 0;
+            lockOnCam.LookAt = target;
+            Player.instance.animator.SetTrigger("blend");
+            Player.instance.canPunch = true;
+        }
+    }
+
+    public void MoveToFpsCamera()
+    {
+        if (state != CamState.FPSCAM)
+        {
+            state = CamState.FPSCAM;
+            freeLookCam.Priority = 0;
+            lockOnCam.Priority = 0;
+            fpsCam.Priority = 10;
+            Player.instance.animator.SetTrigger("blendFPS");
+            Player.instance.canPunch = false;
         }
     }
 

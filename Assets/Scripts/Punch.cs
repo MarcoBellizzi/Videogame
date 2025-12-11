@@ -2,15 +2,21 @@ using UnityEngine;
 
 public class Punch : MonoBehaviour
 {
+    SphereCollider sphereCollider;
+
+    void Awake()
+    {
+        sphereCollider = GetComponent<SphereCollider>();
+    }
     void OnTriggerEnter(Collider other)
     {
-        string objectName = other.gameObject.name;
         // string layerName = LayerMask.LayerToName(other.gameObject.layer);
 
-        if (objectName == "CylinderSpecial")
+        if (other.gameObject.name == "CylinderSpecial")
         {
             Destroy(other.gameObject);
-            GameObject.Find("PunchBox").GetComponent<CapsuleCollider>().enabled = false;
+            sphereCollider.enabled = false;
+            MainCamera.instance.MoveToFreeLookCamera();
         }
 
     }
