@@ -224,8 +224,15 @@ public class Player : MonoBehaviour
     public void Resume()
     {
         canMove = true;
-        canPunchNext = true;
-        canThrow = true;
+        
+        if (MainCamera.instance.state != CamState.FPSCAM)
+        {
+            canPunchNext = true;
+        }
+        else
+        {
+            canThrow = true;
+        }
     }
 
 }
