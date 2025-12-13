@@ -11,6 +11,10 @@ public class PanelObjects : MonoBehaviour
     {
         instance = this;
         objectName = GameObject.Find("ObjectName").GetComponent<TextMeshProUGUI>();
+    }
+
+    void Start()
+    {
         this.gameObject.SetActive(false);
     }
 
@@ -19,8 +23,7 @@ public class PanelObjects : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             this.gameObject.SetActive(false);
-            Player.instance.canMove = true;
-            Player.instance.canPunchNext = true;
+            Player.instance.Resume();
         }
     }
 
@@ -28,7 +31,6 @@ public class PanelObjects : MonoBehaviour
     {
         objectName.text = name;
         this.gameObject.SetActive(true);
-        Player.instance.canMove = false;
-        Player.instance.canPunch = false;
+        Player.instance.Stop();
     }
 }

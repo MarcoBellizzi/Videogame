@@ -1,7 +1,3 @@
-- collider del pugno da un certo frame in poi
-
-- minirino e zoom
-
-- procedere con l'attacco a distanza
+- piccolo bug di lancio dopo attacco
 
 - esempio di combattimento (boss finale)

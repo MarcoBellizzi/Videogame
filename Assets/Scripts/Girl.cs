@@ -65,42 +65,45 @@ public class Girl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+         if (other.gameObject.name == "Player")
+        {
+            if (state == 0)
+            {
+                animator.CrossFade("Talking", 0.2f);
+                PanelDialogues.instance.Show("girl_0", this.Move_0);
+            }
+
+            if (state == 1)
+            {
+                animator.CrossFade("Talking", 0.2f);
+                PanelDialogues.instance.Show("girl_1", this.Move_1);
+            }
+
+            if (state == 2)
+            {
+                animator.CrossFade("Talking", 0.2f);
+                PanelDialogues.instance.Show("girl_2", this.Move_2);
+            }
+
+            if (state == 3)
+            {
+                animator.CrossFade("Talking", 0.2f);
+                PanelDialogues.instance.Show("girl_3", this.Move_3);
+            }
+
+            if (state == 4)
+            {
+                animator.CrossFade("Talking", 0.2f);
+                PanelDialogues.instance.Show("girl_4", this.Move_4);
+            }
+
+            if (state == 5)
+            {
+                animator.CrossFade("Talking", 0.2f);
+                PanelDialogues.instance.Show("girl_5", this.Move_5);
+            }
+        }
         
-        if (state == 0)
-        {
-            animator.CrossFade("Talking", 0.2f);
-            PanelDialogues.instance.Show("girl_0", this.Move_0);
-        }
-
-        if (state == 1)
-        {
-            animator.CrossFade("Talking", 0.2f);
-            PanelDialogues.instance.Show("girl_1", this.Move_1);
-        }
-
-        if (state == 2)
-        {
-            animator.CrossFade("Talking", 0.2f);
-            PanelDialogues.instance.Show("girl_2", this.Move_2);
-        }
-
-        if (state == 3)
-        {
-            animator.CrossFade("Talking", 0.2f);
-            PanelDialogues.instance.Show("girl_3", this.Move_3);
-        }
-
-        if (state == 4)
-        {
-            animator.CrossFade("Talking", 0.2f);
-            PanelDialogues.instance.Show("girl_4", this.Move_4);
-        }
-
-        if (state == 5)
-        {
-            animator.CrossFade("Talking", 0.2f);
-            PanelDialogues.instance.Show("girl_5", this.Move_5);
-        }
     }
 
 }

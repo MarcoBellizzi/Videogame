@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -9,6 +10,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool canMove;
     [HideInInspector] public bool canPunch;
     [HideInInspector] public bool canPunchNext;
+    [HideInInspector] public bool canThrow;
     [HideInInspector] public Animator animator;
 
     // setted from unity
@@ -41,21 +43,29 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         playerOrientation = GameObject.Find("PlayerOrientation").transform;
         toFollowVirtual = GameObject.Find("ToFollowVirtual").transform;
-        canMove = true;
-        canPunch = true;
-        canPunchNext = false;
+        isGrounded = true;  // è a terra (y position nell ispector 9.980798e-05)
+        canMove = false;   // per il primo menu
+        canPunch = false;   // per il primo menu
+        canPunchNext = false;  // prima inizializzazione
+        canThrow = false;  // non è nello stato fps
     }
 
     void Start()
     {
-        isGrounded = true;
+        StartCoroutine(ShowWelcome()); // per attivare il pannello dopo che entra nello state blend nell animator
+    }
+
+    IEnumerator ShowWelcome()
+    {
+        yield return new WaitForSeconds(0.1f);
+        
         PanelDialogues.instance.Show("welcome");
     }
 
     void Update()
     {
         // tira un pugno
-        if (Input.GetKeyDown(KeyCode.Mouse0) && canPunch)
+        if (canPunch && Input.GetKeyDown(KeyCode.Mouse0))
         {
             animator.SetTrigger("punch");
         }
@@ -65,6 +75,12 @@ public class Player : MonoBehaviour
         {
             canPunch = true;
             canPunchNext = false;
+        }
+
+        // lancia qualcosa
+        if (canThrow && Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            animator.SetTrigger("throw");
         }
 
         // è attivo un pannello
@@ -194,6 +210,22 @@ public class Player : MonoBehaviour
 
         controller.Move(airDirection * Time.deltaTime);
 
+    }
+
+    // for menus
+    public void Stop()
+    {
+        canMove = false;
+        canPunch = false;
+        canThrow = false;
+    }
+
+    // for menus
+    public void Resume()
+    {
+        canMove = true;
+        canPunchNext = true;
+        canThrow = true;
     }
 
 }

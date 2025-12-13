@@ -70,6 +70,11 @@ public class PanelDialogues : MonoBehaviour
         };
     }
 
+    void Start()
+    {
+        this.gameObject.SetActive(false);
+    }
+
     void Update()
     {
         // se il pannello è attivo e clicchi -> avanza gli index
@@ -94,8 +99,7 @@ public class PanelDialogues : MonoBehaviour
                     {
                         functionToCall?.Invoke();
                     }
-                    Player.instance.canMove = true;
-                    Player.instance.canPunchNext = true;
+                    Player.instance.Resume();
                 }
             }
             else
@@ -109,8 +113,7 @@ public class PanelDialogues : MonoBehaviour
 
     public void Show(string newState, Action function = null)
     {
-        Player.instance.canMove = false;
-        Player.instance.canPunch = false;
+        Player.instance.Stop();
         index = 0;
         state = newState;
         functionToCall = function;

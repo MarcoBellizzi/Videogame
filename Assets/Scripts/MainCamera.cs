@@ -19,6 +19,8 @@ public class MainCamera : MonoBehaviour
 
     [HideInInspector] public CamState state;
 
+    private GameObject viewFinder;
+
     private float yaw;
     private float pitch;
 
@@ -45,6 +47,12 @@ public class MainCamera : MonoBehaviour
         fpsCam.Priority = 0;
         yaw = 0f;
         pitch = 0f;
+        viewFinder = GameObject.Find("ViewFinder").gameObject;
+    }
+
+    void Start()
+    {
+        viewFinder.SetActive(false);
     }
 
     void Update()
@@ -175,6 +183,7 @@ public class MainCamera : MonoBehaviour
             freeLookCam.Priority = 10;
             lockOnCam.Priority = 0;
             fpsCam.Priority = 0;
+            viewFinder.SetActive(false);
         }
         if (state == CamState.FPSCAM)
         {
@@ -183,7 +192,7 @@ public class MainCamera : MonoBehaviour
             lockOnCam.Priority = 0;
             fpsCam.Priority = 0;
             Player.instance.animator.SetTrigger("blend");
-            Player.instance.canPunch = true;
+            viewFinder.SetActive(false);
         }
     }
 
@@ -196,6 +205,7 @@ public class MainCamera : MonoBehaviour
             lockOnCam.Priority = 10;
             fpsCam.Priority = 0;
             lockOnCam.LookAt = target;
+            viewFinder.SetActive(false);
         }
         if (state == CamState.FPSCAM)
         {
@@ -205,7 +215,7 @@ public class MainCamera : MonoBehaviour
             fpsCam.Priority = 0;
             lockOnCam.LookAt = target;
             Player.instance.animator.SetTrigger("blend");
-            Player.instance.canPunch = true;
+            viewFinder.SetActive(false);
         }
     }
 
@@ -218,7 +228,7 @@ public class MainCamera : MonoBehaviour
             lockOnCam.Priority = 0;
             fpsCam.Priority = 10;
             Player.instance.animator.SetTrigger("blendFPS");
-            Player.instance.canPunch = false;
+            viewFinder.SetActive(true);
         }
     }
 

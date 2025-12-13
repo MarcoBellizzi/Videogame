@@ -11,6 +11,10 @@ public class PanelBag : MonoBehaviour
     {
         instance = this;
         content = GameObject.Find("BagContent").GetComponent<TextMeshProUGUI>();
+    }
+
+    void Start()
+    {
         this.gameObject.SetActive(false);
     }
 
