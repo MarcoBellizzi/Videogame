@@ -8,7 +8,12 @@ public class Punch : MonoBehaviour
     {
         sphereCollider = GetComponent<SphereCollider>();
     }
-    
+
+    void Start()
+    {
+        sphereCollider.enabled = false;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "CylinderSpecial")

@@ -120,7 +120,11 @@ public class MainCamera : MonoBehaviour
                 if (best != null)
                 {
                     MoveToLockOnCamera(best);
-                } 
+                }
+                else
+                {
+                   MoveToFreeLookCamera();
+                }
             }
             else
             {

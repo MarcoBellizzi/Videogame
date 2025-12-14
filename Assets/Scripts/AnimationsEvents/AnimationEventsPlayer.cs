@@ -5,12 +5,9 @@ public class AnimationEventsPlayer : MonoBehaviour
 {
     public GameObject arrowPrefab;
     public Transform arrowSpawnPoint;
-
     
     private float rayDistance = 500f;
     private LayerMask rayMask = ~0;  
-
-
 
     public void EnableCollider()
     {

@@ -24,7 +24,7 @@ public class PanelDialogues : MonoBehaviour
         {
             {
                 "welcome", new List<(string, string)> {
-                    ("Ragazza", "Benvenuto in questo gioco. Muovi il mouse per guandarti intorno. Clicca per proseguire."),
+                    ("Ragazza", "Benvenuto in questo gioco. Muovi il mouse per guardarti intorno. Clicca per proseguire."),
                     ("Ragazza", "Usa i tasti AWDS per spostarti, vieni verso di me.")
                 }
             },
@@ -42,29 +42,32 @@ public class PanelDialogues : MonoBehaviour
             },
             {
                 "girl_2", new List<(string, string)> {
-                    ("Ragazza", "Puoi raccogliere alcuni degli oggetti che trovi. Prova a passare sopra e raccogliere questi oggetti."),
+                    ("Ragazza", "Puoi raccogliere alcuni degli oggetti che trovi."),
                     ("Ragazza", "Se premi il tasto P aprirai un pannello che ti mostrerà tutti gli oggetti che hai nello zaino."),
-                    ("Ragazza", "Se il pannello dello zaino è aperto puoi premere ESC per tornare al menù principale.")
+                    ("Ragazza", "Se il pannello dello zaino è aperto puoi premere ESC per tornare al menù principale."),
+                    ("Ragazza", "Raccogli questi oggetti e verifica la presenza nello zaino.")
                 }
             },
             {
                 "girl_3", new List<(string, string)> {
-                    ("Ragazza", "Se premi il tasto Q cambi tipo di videocamera."),
-                    ("Ragazza", "Mirerai un obbiettivo e non lo perderai d'occhio. Prova a tenere d'occhio quel cilindro li a destra"),
-                    ("Ragazza", "Premi di nuovo Q per tornare alla camera normale.")
+                    ("Ragazza", "Se clicchi con il mouse tiri un pugno."),
+                    ("Ragazza", "Se premi il tasto Q cambi tipo di videocamera. Mirerai un obbiettivo e non lo perderai d'occhio."),
+                    ("Ragazza", "Premi di nuovo Q per tornare alla camera normale."),
+                    ("Ragazza", "Mira quel cilindro e colpiscilo.")
                 }
             },
             {
                 "girl_4", new List<(string, string)> {
                     ("Ragazza", "Se premi il tasto E cambi di nuovo tipo di videocamera."),
                     ("Ragazza", "Questa è una telecamera di tipo fps, ottima per sparare."),
-                    ("Ragazza", "Premi di nuovo E per tornare alla camera normale.")
+                    ("Ragazza", "Se mentre sei in questa modalità clicci, al posto di tirare un pugno lancerai uno shuriken."),
+                    ("Ragazza", "Premi di nuovo E per tornare alla camera normale."),
+                    ("Ragazza", "Prova a colpire quella palla fluttuante.")
                 }
             },
             {
                 "girl_5", new List<(string, string)> {
-                    ("Ragazza", "Mentre sei con latelecamera base o la telecamera in lock puoi tirare un pugno se clicchi con il tasto sinistro."),
-                    ("Ragazza", "Prova a distruggere quel cilindo."),
+                    ("Ragazza", "Ottimo, vediamo ora che sai fare, sarò il tuo avversario."),
                 }
             }
         };
