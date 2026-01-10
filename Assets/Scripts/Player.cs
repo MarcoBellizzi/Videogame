@@ -8,13 +8,18 @@ public class Player : MonoBehaviour
     [HideInInspector] public Transform playerOrientation;
     [HideInInspector] public Transform toFollowVirtual;
     [HideInInspector] public bool canMove;
-    [HideInInspector] public bool canPunch;
-    [HideInInspector] public bool canPunchNext;
+    [HideInInspector] public bool canAttack;
+    [HideInInspector] public bool canAttackNext;
     [HideInInspector] public bool canThrow;
+    [HideInInspector] public bool isThrowing;
+    [HideInInspector] public bool isHolding;
     [HideInInspector] public Animator animator;
 
     // setted from unity
     [SerializeField] public Transform playerModel;
+    [SerializeField] public Transform sword;
+    [SerializeField] public Transform swordPoint;
+    [SerializeField] public Transform rightHandPoint;
 
     // loaded once
     private CharacterController controller;
@@ -39,15 +44,17 @@ public class Player : MonoBehaviour
     void Awake()
     {
         instance = this;
-        controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
-        playerOrientation = GameObject.Find("PlayerOrientation").transform;
-        toFollowVirtual = GameObject.Find("ToFollowVirtual").transform;
+        controller = GetComponent<CharacterController>();
+        playerOrientation = GameObject.Find("Orientation").transform;
+        toFollowVirtual = GameObject.Find("ToFollow").transform;
         isGrounded = true;  // è a terra (y position nell ispector 9.980798e-05)
         canMove = false;   // per il primo menu
-        canPunch = false;   // per il primo menu
-        canPunchNext = false;  // prima inizializzazione
+        canAttack = false;   // per il primo menu
+        canAttackNext = false;  // prima inizializzazione
         canThrow = false;  // non è nello stato fps
+        isThrowing = false;
+        isHolding = false;
     }
 
     void Start()
@@ -64,23 +71,38 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // tira un pugno
-        if (canPunch && Input.GetKeyDown(KeyCode.Mouse0))
+
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            animator.SetTrigger("punch");
+            if (!isHolding)
+            {
+                animator.SetLayerWeight(animator.GetLayerIndex("UpperBody"), 1f);
+                animator.SetTrigger("unsheathe");
+                isHolding = true;
+            }
+            else
+            {
+                animator.SetTrigger("sheathe");
+                isHolding = false;
+            }
         }
+
+        if (isHolding && canAttack && Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            animator.SetTrigger("attack");
+        }
+
+        // // lancia qualcosa
+        // if (canThrow && Input.GetKeyDown(KeyCode.Mouse0))
+        // {
+        //     animator.SetTrigger("throw");
+        // }
 
         // evita di tirare un pugno quando chiudo lo schermo di una conversazione o degli oggetti
-        if (canPunchNext)
+        if (canAttackNext)
         {
-            canPunch = true;
-            canPunchNext = false;
-        }
-
-        // lancia qualcosa
-        if (canThrow && Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            animator.SetTrigger("throw");
+            canAttack = true;
+            canAttackNext = false;
         }
 
         // è attivo un pannello
@@ -96,11 +118,11 @@ public class Player : MonoBehaviour
         {
             horInput = Input.GetAxis("Horizontal");
             verInput = Input.GetAxis("Vertical");
-            jump = Input.GetKey(KeyCode.Space);
+            jump = Input.GetKeyDown(KeyCode.Space);
             run = Input.GetKey(KeyCode.LeftShift);
 
-            animator.SetFloat("oxInput", horInput, 0.1f, Time.deltaTime);
-            animator.SetFloat("vxInput", verInput, 0.1f, Time.deltaTime);
+            animator.SetFloat("horInput", horInput, 0.1f, Time.deltaTime);
+            animator.SetFloat("verInput", verInput, 0.1f, Time.deltaTime);
         }
         
         groundDirection = playerOrientation.forward * verInput + playerOrientation.right * horInput;
@@ -117,21 +139,34 @@ public class Player : MonoBehaviour
             {
                 airDirection = Vector3.zero;
 
-                if (MainCamera.instance.state != CamState.FPSCAM)
+                if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
                 {
-                    animator.SetTrigger("blend");
+                    if (!isHolding)
+                    {
+                        animator.SetTrigger("freeMode");
+                    }
+                    else
+                    {
+                        animator.SetTrigger("freeModeHolding");
+                    }
                 }
-                else
+                if (MainCamera.instance.state == CamState.LOCKONCAM)
                 {
-                    animator.SetTrigger("blendFPS");
+                    if (!isHolding)
+                    {
+                        animator.SetTrigger("lockMode");
+                    }
+                    else
+                    {
+                        animator.SetTrigger("lockModeHolding");
+                    }
                 }
             }
 
             // ha appena iniziato il salto
             if (jump)
             {
-                
-                if (MainCamera.instance.state != CamState.FPSCAM)
+                if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
                 {
                     if (groundDirection != Vector3.zero)
                     {
@@ -142,7 +177,7 @@ public class Player : MonoBehaviour
                        airDirection = Vector3.zero;
                     }
                 }
-                else
+                if (MainCamera.instance.state == CamState.LOCKONCAM)
                 {
                     airDirection = groundDirection * currentSpeed;
                 }
@@ -156,18 +191,18 @@ public class Player : MonoBehaviour
             {
                 if (!run)
                 {
-                    animator.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+                    animator.SetFloat("speed", 0.5f, 0.1f, Time.deltaTime);
                     currentSpeed = movementSpeed;
                 }
                 else
                 {
-                    animator.SetFloat("Speed", 1f, 0.1f, Time.deltaTime);
+                    animator.SetFloat("speed", 1f, 0.1f, Time.deltaTime);
                     currentSpeed = movementSpeed * 2;
                 }
 
                 controller.Move(groundDirection * currentSpeed * Time.deltaTime);
 
-                if (MainCamera.instance.state != CamState.FPSCAM)
+                if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
                 {
                     // rotate the player model
                     playerModel.forward = Vector3.Slerp(playerModel.forward, groundDirection.normalized, Time.deltaTime * rotationSpeed);
@@ -176,7 +211,7 @@ public class Player : MonoBehaviour
             // è fermo a terra
             else
             {
-                animator.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
+                animator.SetFloat("speed", 0, 0.1f, Time.deltaTime);
             }
 
         }
@@ -191,7 +226,7 @@ public class Player : MonoBehaviour
                 
                 animator.SetTrigger("jump");
                 
-                if (MainCamera.instance.state != CamState.FPSCAM)
+                if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
                 {
                     if (groundDirection != Vector3.zero)
                     {
@@ -200,7 +235,7 @@ public class Player : MonoBehaviour
                     }
 
                 }
-                else
+                if (MainCamera.instance.state == CamState.LOCKONCAM)
                 {
                     airDirection.x = groundDirection.x * currentSpeed;
                     airDirection.z = groundDirection.z * currentSpeed;
@@ -208,15 +243,20 @@ public class Player : MonoBehaviour
             }
         }
 
+        // airDirection = Vector3.zero;
+
+        // controller.Move((airDirection + (groundDirection * currentSpeed)) * Time.deltaTime);
+        
         controller.Move(airDirection * Time.deltaTime);
 
     }
+    
 
     // for menus
     public void Stop()
     {
         canMove = false;
-        canPunch = false;
+        canAttack = false;
         canThrow = false;
     }
 
@@ -225,11 +265,11 @@ public class Player : MonoBehaviour
     {
         canMove = true;
         
-        if (MainCamera.instance.state != CamState.FPSCAM)
+        if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
         {
-            canPunchNext = true;
+            canAttackNext = true;
         }
-        else
+        if (MainCamera.instance.state == CamState.LOCKONCAM)
         {
             canThrow = true;
         }

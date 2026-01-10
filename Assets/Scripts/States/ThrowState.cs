@@ -7,6 +7,7 @@ public class ThrowState : StateMachineBehaviour
     {
       Player.instance.canMove = false;
       Player.instance.canThrow = false;
+      Player.instance.isThrowing = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -20,6 +21,7 @@ public class ThrowState : StateMachineBehaviour
     {
       Player.instance.canMove = true;
       Player.instance.canThrow = true;
+      Player.instance.isThrowing = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

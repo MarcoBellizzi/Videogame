@@ -1,3 +1,5 @@
-- rotazione verso destra im fps
+- migliorare ancora un po l animator perchè c'è qualche bug sul salto
+
+- dialoghi con scelta del personaggio
 
 - esempio di combattimento (boss finale)
