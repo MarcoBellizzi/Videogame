@@ -32,10 +32,10 @@ ModelImporter:
       name: Material #25
     second: {fileID: 2100000, guid: 7c2235abd48a5704db5eb34de65facc8, type: 2}
   materials:
-    materialImportMode: 1
-    materialName: 0
+    materialImportMode: 2
+    materialName: 1
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

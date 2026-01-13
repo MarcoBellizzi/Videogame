@@ -29,19 +29,19 @@ public class PanelDialogues : MonoBehaviour
                 }
             },
             {
-                "girl_0", new List<(string, string)> {
+                "girl_run", new List<(string, string)> {
                     ("Ragazza", "Ciao, sai che se premi SHIFT mentre cammini corri?"),
                     ("Ragazza", "Vediamo se riesci a prendermi.")
                 }
             },
             {
-                "girl_1", new List<(string, string)> {
+                "girl_jump", new List<(string, string)> {
                     ("Ragazza", "Ottimo. Con la tasto SPACE salti. Se sei fermo salti in alto, se ti muovi salti in avanti."),
                     ("Ragazza", "Salta questo ostacolo.")
                 }
             },
             {
-                "girl_2", new List<(string, string)> {
+                "girl_items", new List<(string, string)> {
                     ("Ragazza", "Puoi raccogliere alcuni degli oggetti che trovi."),
                     ("Ragazza", "Se premi il tasto P aprirai un pannello che ti mostrerà tutti gli oggetti che hai nello zaino."),
                     ("Ragazza", "Se il pannello dello zaino è aperto puoi premere ESC per tornare al menù principale."),
@@ -49,25 +49,12 @@ public class PanelDialogues : MonoBehaviour
                 }
             },
             {
-                "girl_3", new List<(string, string)> {
-                    ("Ragazza", "Se clicchi con il mouse tiri un pugno."),
+                "girl_attack", new List<(string, string)> {
+                    ("Ragazza", "Con il tasto C estrai e riponi la spada. Quando hai la spada estratta puoi cliccare per attaccare."),
                     ("Ragazza", "Se premi il tasto Q cambi tipo di videocamera. Mirerai un obbiettivo e non lo perderai d'occhio."),
                     ("Ragazza", "Premi di nuovo Q per tornare alla camera normale."),
-                    ("Ragazza", "Mira quel cilindro e colpiscilo.")
-                }
-            },
-            {
-                "girl_4", new List<(string, string)> {
-                    ("Ragazza", "Se premi il tasto E cambi di nuovo tipo di videocamera."),
-                    ("Ragazza", "Questa è una telecamera di tipo fps, ottima per sparare."),
-                    ("Ragazza", "Se mentre sei in questa modalità clicci, al posto di tirare un pugno lancerai uno shuriken."),
-                    ("Ragazza", "Premi di nuovo E per tornare alla camera normale."),
-                    ("Ragazza", "Prova a colpire quella palla fluttuante.")
-                }
-            },
-            {
-                "girl_5", new List<(string, string)> {
-                    ("Ragazza", "Ottimo, vediamo ora che sai fare, sarò il tuo avversario."),
+                    ("Ragazza", "Mira quel cilindro e colpiscilo con la spada."),
+                    ("Ragazza", "Vieni da me quando vuoi allenarti in combattimento."),
                 }
             }
         };
@@ -80,8 +67,7 @@ public class PanelDialogues : MonoBehaviour
 
     void Update()
     {
-        // se il pannello è attivo e clicchi -> avanza gli index
-        if (GetActive() && Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             // se la frase è completa
             if(content.text == dialogues[state][index].Item2)
@@ -96,6 +82,7 @@ public class PanelDialogues : MonoBehaviour
                 }
                 else
                 {
+                    // chiudi il pannello e invoca la callback
                     content.text = string.Empty;
                     this.gameObject.SetActive(false);
                     if (functionToCall != null)
@@ -114,16 +101,6 @@ public class PanelDialogues : MonoBehaviour
         }
     }
 
-    public void Show(string newState, Action function = null)
-    {
-        Player.instance.Stop();
-        index = 0;
-        state = newState;
-        functionToCall = function;
-        this.gameObject.SetActive(true);
-        StartCoroutine(Write(dialogues[state][index]));
-    }
-
     IEnumerator Write((string per, string con) tuple)
     {
         person.text = tuple.per;
@@ -134,9 +111,14 @@ public class PanelDialogues : MonoBehaviour
         }
     }
 
-    public bool GetActive()
+    public void Show(string newState, Action function = null)
     {
-        return this.gameObject.activeSelf;
+        Player.instance.Stop();
+        index = 0;
+        state = newState;
+        functionToCall = function;
+        this.gameObject.SetActive(true);
+        StartCoroutine(Write(dialogues[state][index]));
     }
 
 }

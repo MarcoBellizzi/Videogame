@@ -1,9 +1,24 @@
+using System;
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 
+public enum GirlState
+{
+    WAIT_FOR_RUN,
+    WAIT_FOR_JUMP,
+    WAIT_FOR_ITEMS,
+    WAIT_FOR_ATTACK,
+    WAIT_FOR_TRAIN
+}
+
 public class Girl : MonoBehaviour
 {
-    private int state;
+    public static Girl instance;
+    [SerializeField] public Transform sword;
+    [SerializeField] public Transform swordPoint;
+    [SerializeField] public Transform rightHandPoint;
+    private GirlState state;
     private Animator animator;
     private Canvas canvas;
     private TextMeshProUGUI content;
@@ -13,7 +28,9 @@ public class Girl : MonoBehaviour
 
     void Awake()
     {
-        state = 0;     
+        instance = this;
+        // state = GirlState.WAIT_FOR_RUN;
+        state = GirlState.WAIT_FOR_TRAIN;
         animator = GetComponentInChildren<Animator>();
         canvas = GameObject.Find("CanvasOnTop").GetComponent<Canvas>();
         content = GameObject.Find("TextOnTop").GetComponent<TextMeshProUGUI>();
@@ -30,7 +47,7 @@ public class Girl : MonoBehaviour
     void Update()
     {
         // non posso controllare il click del personaggio nel OnTriggerStay perchè viene chiamato meno dell update
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !PanelChoice.instance.gameObject.activeSelf)
         {
             isClicking = true; 
         }
@@ -41,146 +58,95 @@ public class Girl : MonoBehaviour
         }
     }
 
-    void Move_0()
+    void MoveToJump()
     {
-        state += 1;
-        transform.position = GameObject.Find("GirlPosition1").transform.position;
-        animator.CrossFade("Waving", 0.2f);
-        canvas.gameObject.SetActive(false);
-        sphereCollider.enabled = true;
-        Player.instance.Resume();
+        state = GirlState.WAIT_FOR_JUMP;
+        transform.position = GameObject.Find("GirlPositionJump").transform.position;
+        Wave();
     }
 
-    void Move_1()
+    void MoveToItems()
     {
-        state += 1;
-        transform.position = GameObject.Find("GirlPosition2").transform.position;
-        animator.CrossFade("Waving", 0.2f);
-        canvas.gameObject.SetActive(false);
-        sphereCollider.enabled = true;
-        Player.instance.Resume();
+        state = GirlState.WAIT_FOR_ITEMS;
+        transform.position = GameObject.Find("GirlPositionItems").transform.position;
+        Wave();
     }
 
-    void Move_2()
+    void MoveToAttack()
     {
-        state += 1;
-        transform.position = GameObject.Find("GirlPosition3").transform.position;
-        animator.CrossFade("Waving", 0.2f);
-        canvas.gameObject.SetActive(false);
-        sphereCollider.enabled = true;
-        Player.instance.Resume();
+        state = GirlState.WAIT_FOR_ATTACK;
+        transform.position = GameObject.Find("GirlPositionAttack").transform.position;
+        Wave();
     }
 
-    void Move_3()
+    void MoveToTrain()
     {
-        state += 1;
-        transform.position = GameObject.Find("GirlPosition4").transform.position;
-        animator.CrossFade("Waving", 0.2f);
-        canvas.gameObject.SetActive(false);
-        sphereCollider.enabled = true;
-        Player.instance.Resume();
+        state = GirlState.WAIT_FOR_TRAIN;
+        transform.position = GameObject.Find("GirlPositionTrain").transform.position;
+        Idle();
     }
 
-    void Move_4()
-    {
-        state += 1;
-        transform.position = GameObject.Find("GirlPosition5").transform.position;
-        animator.CrossFade("Waving", 0.2f);
-        canvas.gameObject.SetActive(false);
-        sphereCollider.enabled = true;
-        Player.instance.Resume();
-    }
-
-    void Move_5()
-    {
-        state += 1;
-        // transform.position = GameObject.Find("GirlPosition6").transform.position;
-        animator.CrossFade("Waving", 0.2f);
-        canvas.gameObject.SetActive(false);
-        sphereCollider.enabled = true;
-        Player.instance.Resume();
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "Player")
-        {
-            canvas.gameObject.SetActive(true);
-            content.text = "Clicca per parlare";
-            Player.instance.Stop();
-            Player.instance.canMove = true;
-        }
-    }
+    // void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.gameObject.name == "Player")
+    //     {
+    //         canvas.gameObject.SetActive(true);
+    //         content.text = "Clicca per parlare";
+    //         Player.instance.Stop();
+    //         Player.instance.canMove = true;
+    //     }
+    // }
 
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.name == "Player")
         {
+            // NON IL MASSIMO QUI
+            canvas.gameObject.SetActive(true);
+            content.text = "Clicca per parlare";
+            Player.instance.Stop();
+            Player.instance.canMove = true;
+
             canvas.transform.position = transform.position + canvasOffset;
-            canvas.transform.rotation = 
-                Quaternion.LookRotation(canvas.transform.position - MainCamera.instance.transform.position);
+            canvas.transform.rotation = Quaternion.LookRotation(canvas.transform.position - MainCamera.instance.transform.position);
 
             if (isClicking)
             {
-                if (state == 0)
+                if (state == GirlState.WAIT_FOR_RUN)
                 {
-                    sphereCollider.enabled = false;
-                    canvas.gameObject.SetActive(false);
-                    Player.instance.canMove = false;
-                    animator.CrossFade("Talking", 0.2f);
-                    PanelDialogues.instance.Show("girl_0", this.Move_0);
+                    Talk();
+                    PanelDialogues.instance.Show("girl_run", this.MoveToJump);
                 }
 
-                if (state == 1)
+                if (state == GirlState.WAIT_FOR_JUMP)
                 {
-                    sphereCollider.enabled = false;
-                    canvas.gameObject.SetActive(false);
-                    Player.instance.canMove = false;
-                    animator.CrossFade("Talking", 0.2f);
-                    PanelDialogues.instance.Show("girl_1", this.Move_1);
+                    Talk();
+                    PanelDialogues.instance.Show("girl_jump", this.MoveToItems);
                 }
 
-                if (state == 2)
+                if (state == GirlState.WAIT_FOR_ITEMS)
                 {
-                    sphereCollider.enabled = false;
-                    canvas.gameObject.SetActive(false);
-                    Player.instance.canMove = false;
-                    animator.CrossFade("Talking", 0.2f);
-                    PanelDialogues.instance.Show("girl_2", this.Move_2);
+                    Talk();
+                    PanelDialogues.instance.Show("girl_items", this.MoveToAttack);
                 }
 
-                if (state == 3)
+                if (state == GirlState.WAIT_FOR_ATTACK)
                 {
-                    sphereCollider.enabled = false;
-                    canvas.gameObject.SetActive(false);
-                    Player.instance.canMove = false;
-                    animator.CrossFade("Talking", 0.2f);
-                    PanelDialogues.instance.Show("girl_3", this.Move_3);
+                    Talk();
+                    PanelDialogues.instance.Show("girl_attack", this.MoveToTrain);
                 }
 
-                if (state == 4)
+                if (state == GirlState.WAIT_FOR_TRAIN)
                 {
                     sphereCollider.enabled = false;
                     canvas.gameObject.SetActive(false);
                     Player.instance.canMove = false;
-                    animator.CrossFade("Talking", 0.2f);
-                    PanelDialogues.instance.Show("girl_4", this.Move_4);
-                }
-
-                if (state == 5)
-                {
-                    sphereCollider.enabled = false;
-                    canvas.gameObject.SetActive(false);
-                    Player.instance.canMove = false;
-                    animator.CrossFade("Talking", 0.2f);
-                    PanelDialogues.instance.Show("girl_5", this.Move_5);
+                    PanelChoice.instance.Show("train");
                 }
             }
         }
-
-
-        
     }
+
 
     void OnTriggerExit(Collider other)
     {
@@ -189,6 +155,38 @@ public class Girl : MonoBehaviour
             canvas.gameObject.SetActive(false);
             Player.instance.Resume();
         }
+    }
+
+    void Talk()
+    {
+        sphereCollider.enabled = false;
+        canvas.gameObject.SetActive(false);
+        Player.instance.canMove = false;
+        animator.SetTrigger("talk");
+    }
+
+    public void Wave()
+    {
+        sphereCollider.enabled = true;
+        canvas.gameObject.SetActive(false);
+        Player.instance.Resume();
+        animator.SetTrigger("wave");
+    }
+
+    public void Idle()
+    {
+        sphereCollider.enabled = true;
+        canvas.gameObject.SetActive(false);
+        Player.instance.Resume();
+        animator.SetTrigger("idle");
+    }
+
+    public void Unsheathe()
+    {
+        sphereCollider.enabled = false;
+        canvas.gameObject.SetActive(false);
+        Player.instance.Resume();
+        animator.SetTrigger("unsheathe");
     }
 
 }
