@@ -25,7 +25,7 @@ public class MainCamera : MonoBehaviour
     // private float pitch;
 
     private float locCamBack = 0f;
-    private float locCamUp = 0f;
+    private float locCamUp = 1f;
     // private float fpsCamBack = 3f;
     // private float fpsCamUp = 1.5f;
     // private float fpsCamRight = 0.6f;

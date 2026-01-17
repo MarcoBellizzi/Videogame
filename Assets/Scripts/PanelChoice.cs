@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class PanelChoice : MonoBehaviour
 {
@@ -21,8 +19,6 @@ public class PanelChoice : MonoBehaviour
         instance = this;
         question = GameObject.Find("Question").GetComponent<TextMeshProUGUI>();
         answersContainer = GameObject.Find("AnswersContainer");
-
-        
     }
 
     void Start()

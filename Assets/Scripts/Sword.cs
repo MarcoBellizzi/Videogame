@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
-    BoxCollider triggerCollider;
+    public bool player; // from inspector
+    private BoxCollider triggerCollider;
 
     void Awake()
     {
@@ -16,12 +17,37 @@ public class Sword : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "CylinderSpecial")
-        {
-            Destroy(other.gameObject);
-            triggerCollider.enabled = false;
-            MainCamera.instance.MoveToFreeLookCamera();
+        if (player)
+        {        
+            if (other.gameObject.name == "CylinderSpecial")
+            {
+                Destroy(other.gameObject);
+                triggerCollider.enabled = false;
+                MainCamera.instance.MoveToFreeLookCamera();
+            }
+            if (other.gameObject.name == "Girl")
+            {
+                if (Girl.instance.canGetHit)
+                {
+                    Player.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
+                    Girl.instance.GetHit(20f);
+                }
+            }
         }
+        else
+        {   
+            if (other.gameObject.name == "Player")
+            {
+                if (Player.instance.canGetHit)
+                {
+                    Girl.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
+                    Player.instance.GetHit(20f);
+                }
+            }
+        }
+
+
+
     }
 
 }

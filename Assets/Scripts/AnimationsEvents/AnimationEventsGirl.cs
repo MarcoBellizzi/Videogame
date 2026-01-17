@@ -13,4 +13,14 @@ public class AnimationEventsGirl : MonoBehaviour
         Girl.instance.sword.transform.localPosition = Vector3.zero;
         Girl.instance.sword.transform.localRotation = Quaternion.identity;
     }
+
+    public void EnableCollider()
+    {
+        Girl.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = true;
+    }
+
+    public void DisableCollider()
+    {
+        Girl.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
+    }
 }

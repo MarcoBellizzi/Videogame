@@ -1,13 +1,12 @@
 using UnityEngine;
 
-public class ThrowState : StateMachineBehaviour
+public class PlayerBlendHoldingState : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-      Player.instance.canMove = false;
-      Player.instance.canThrow = false;
-      Player.instance.isThrowing = true;
+       Player.instance.canAttack = true;
+       Player.instance.canGetHit = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -17,12 +16,10 @@ public class ThrowState : StateMachineBehaviour
     //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-      Player.instance.canMove = true;
-      Player.instance.canThrow = true;
-      Player.instance.isThrowing = false;
-    }
+   //  override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+   //  {
+      
+   //  }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

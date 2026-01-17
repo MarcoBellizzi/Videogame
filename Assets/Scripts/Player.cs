@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public static Player instance;
-    [HideInInspector] public Transform playerOrientation;
-    [HideInInspector] public Transform toFollowVirtual;
+    // public, used in animator
     [HideInInspector] public bool canMove;
     [HideInInspector] public bool canAttack;
     [HideInInspector] public bool canAttackNext;
-    [HideInInspector] public bool canThrow;
-    [HideInInspector] public bool isThrowing;
     [HideInInspector] public bool isHolding;
-    [HideInInspector] public Animator animator;
+    [HideInInspector] public bool canGetHit;
+
+    // public
+    [HideInInspector] public float healthPoints;
 
     // setted from unity
     [SerializeField] public Transform playerModel;
@@ -22,9 +23,13 @@ public class Player : MonoBehaviour
     [SerializeField] public Transform rightHandPoint;
 
     // loaded once
-    private CharacterController controller;
+    public static Player instance;
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public  CharacterController controller;
+    [HideInInspector] public Transform playerOrientation;
+    [HideInInspector] public Transform toFollowVirtual;
 
-    // used in update
+    // privates, used in update
     private float horInput;
     private float verInput;
     private bool jump;
@@ -52,9 +57,9 @@ public class Player : MonoBehaviour
         canMove = false;   // per il primo menu
         canAttack = false;   // per il primo menu
         canAttackNext = false;  // prima inizializzazione
-        canThrow = false;  // non è nello stato fps
-        isThrowing = false;
         isHolding = false;
+        healthPoints = 100f;
+        canGetHit = true;
     }
 
     void Start()
@@ -72,18 +77,27 @@ public class Player : MonoBehaviour
     void Update()
     {
 
+        // external input
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            healthPoints -= 10f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            // Girl.instance.healthPoints -= 10f;
+            PanelHeathBars.instance.enemyHealtPoints -= 10f;
+        }
+
         if (Input.GetKeyDown(KeyCode.C))
         {
             if (!isHolding)
             {
-                animator.SetLayerWeight(animator.GetLayerIndex("UpperBody"), 1f);
                 animator.SetTrigger("unsheathe");
-                isHolding = true;
             }
             else
             {
                 animator.SetTrigger("sheathe");
-                isHolding = false;
             }
         }
 
@@ -91,12 +105,6 @@ public class Player : MonoBehaviour
         {
             animator.SetTrigger("attack");
         }
-
-        // // lancia qualcosa
-        // if (canThrow && Input.GetKeyDown(KeyCode.Mouse0))
-        // {
-        //     animator.SetTrigger("throw");
-        // }
 
         // evita di tirare un pugno quando chiudo lo schermo di una conversazione o degli oggetti
         if (canAttackNext)
@@ -112,6 +120,9 @@ public class Player : MonoBehaviour
             verInput = 0;
             jump = false;
             run = false;
+
+            animator.SetFloat("horInput", 0, 0.1f, Time.deltaTime);
+            animator.SetFloat("verInput", 0, 0.1f, Time.deltaTime);
         }
         // non sono attivi pannelli
         else
@@ -124,20 +135,20 @@ public class Player : MonoBehaviour
             animator.SetFloat("horInput", horInput, 0.1f, Time.deltaTime);
             animator.SetFloat("verInput", verInput, 0.1f, Time.deltaTime);
         }
-        
-        groundDirection = playerOrientation.forward * verInput + playerOrientation.right * horInput;
 
         wasGrounded = isGrounded;
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.01f);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.01f); // da fixare meglio
 
 
         // è a terra
         if (isGrounded)
         {
+            groundDirection = playerOrientation.forward * verInput + playerOrientation.right * horInput;
+
             // è appena atterrato
             if(!wasGrounded)
             {
-                airDirection = Vector3.zero;
+                airDirection = Vector3.zero; // valutare se negativo
 
                 if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
                 {
@@ -170,7 +181,7 @@ public class Player : MonoBehaviour
                 {
                     if (groundDirection != Vector3.zero)
                     {
-                        airDirection = playerModel.forward * currentSpeed;
+                        airDirection = playerModel.forward * currentSpeed; // airDirection.y=0
                     }
                     else
                     {
@@ -179,7 +190,7 @@ public class Player : MonoBehaviour
                 }
                 if (MainCamera.instance.state == CamState.LOCKONCAM)
                 {
-                    airDirection = groundDirection * currentSpeed;
+                    airDirection = groundDirection * currentSpeed; // airDirection.y=0
                 }
 
                 airDirection.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
@@ -200,8 +211,6 @@ public class Player : MonoBehaviour
                     currentSpeed = movementSpeed * 2;
                 }
 
-                controller.Move(groundDirection * currentSpeed * Time.deltaTime);
-
                 if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
                 {
                     // rotate the player model
@@ -212,6 +221,7 @@ public class Player : MonoBehaviour
             else
             {
                 animator.SetFloat("speed", 0, 0.1f, Time.deltaTime);
+                currentSpeed = 0;
             }
 
         }
@@ -223,7 +233,6 @@ public class Player : MonoBehaviour
             // ha iniziato a cadere o ha appena iniziato il salto
             if (wasGrounded)
             {   
-                
                 animator.SetTrigger("jump");
                 
                 if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
@@ -233,7 +242,6 @@ public class Player : MonoBehaviour
                         airDirection.x = playerModel.forward.x * currentSpeed;
                         airDirection.z = playerModel.forward.z * currentSpeed;
                     }
-
                 }
                 if (MainCamera.instance.state == CamState.LOCKONCAM)
                 {
@@ -241,14 +249,12 @@ public class Player : MonoBehaviour
                     airDirection.z = groundDirection.z * currentSpeed;
                 }
             }
+
+            groundDirection = Vector3.zero;
         }
 
-        // airDirection = Vector3.zero;
-
-        // controller.Move((airDirection + (groundDirection * currentSpeed)) * Time.deltaTime);
+        controller.Move((airDirection + groundDirection * currentSpeed) * Time.deltaTime);
         
-        controller.Move(airDirection * Time.deltaTime);
-
     }
     
 
@@ -257,22 +263,39 @@ public class Player : MonoBehaviour
     {
         canMove = false;
         canAttack = false;
-        canThrow = false;
     }
 
     // for menus
     public void Resume()
     {
         canMove = true;
-        
-        if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
+        canAttackNext = true;
+    }
+
+    public void GetHit(float demage)
+    {
+        healthPoints -= demage;
+
+        if (healthPoints <= 0)
         {
-            canAttackNext = true;
+            animator.SetTrigger("death");
         }
-        if (MainCamera.instance.state == CamState.LOCKONCAM)
-        {
-            canThrow = true;
-        }
+
+        animator.SetTrigger("getHit");
+    }
+
+    IEnumerator WaitForEnd()
+    {
+        yield return new WaitForSeconds(6f);
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void Death()
+    {
+        StartCoroutine(WaitForEnd());
     }
 
 }

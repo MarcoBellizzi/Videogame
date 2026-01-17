@@ -1,3 +1,6 @@
-- migliorare ancora un po l animator perchè c'è qualche bug sul salto
-
-- esempio di combattimento (boss finale)
+- gestire meglio il combattimento
+    - se è troppo vicino prende l'avversario
+    - l'avversario può essere gethit solo in idle ?
+    - il player puù essere gethit mentre attacca?
+    - danno sulla barra in giallo
+    - aggiornare il colore della barra

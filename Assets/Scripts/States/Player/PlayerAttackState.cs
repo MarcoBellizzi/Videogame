@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class AttackState : StateMachineBehaviour
+public class PlayerAttackState : StateMachineBehaviour
 {
    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
    {
       Player.instance.canAttack = false;
+      Player.instance.canMove = false;
    }
 
    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -18,6 +19,7 @@ public class AttackState : StateMachineBehaviour
    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
    {
       Player.instance.canAttack = true;
+      Player.instance.canMove = true;
    }
 
 

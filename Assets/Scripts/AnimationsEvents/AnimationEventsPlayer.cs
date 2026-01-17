@@ -1,26 +1,7 @@
-using Cinemachine;
 using UnityEngine;
 
 public class AnimationEventsPlayer : MonoBehaviour
 {
-    // public GameObject arrowPrefab;
-    // public Transform arrowSpawnPoint;
-    
-    // private float rayDistance = 500f;
-    // private LayerMask rayMask = ~0;
-
-    
-
-    public void EnableCollider()
-    {
-        Player.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = true;
-    }
-
-    public void DisableCollider()
-    {
-        Player.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
-    }
-
     public void Hold()
     {
         Player.instance.sword.SetParent(Player.instance.rightHandPoint);
@@ -32,6 +13,22 @@ public class AnimationEventsPlayer : MonoBehaviour
         Player.instance.sword.transform.localPosition = Vector3.zero;
         Player.instance.sword.transform.localRotation = Quaternion.identity;
     }
+
+    public void EnableCollider()
+    {
+        Player.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = true;
+    }
+
+    public void DisableCollider()
+    {
+        Player.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
+    }
+
+    // public GameObject arrowPrefab;
+    // public Transform arrowSpawnPoint;
+    
+    // private float rayDistance = 500f;
+    // private LayerMask rayMask = ~0;
 
     // public void Throw()
     // {
