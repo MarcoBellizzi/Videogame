@@ -5,7 +5,6 @@ public class PlayerGetHitState : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       Player.instance.canGetHit = false;
        Player.instance.canMove = false;
        Player.instance.canAttack = false;
     }
@@ -19,7 +18,6 @@ public class PlayerGetHitState : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       Player.instance.canGetHit = true;
        Player.instance.canMove = true;
        Player.instance.canAttack = true;
     }

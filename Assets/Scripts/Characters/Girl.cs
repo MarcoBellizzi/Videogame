@@ -13,7 +13,8 @@ public enum GirlState
     COMBAT_RUN,
     COMBAT_RUN_TARGET,
     COMBAT_ATTACK,
-    DEATH
+    DEATH,
+    RUN_BACK
 }
 
 public class Girl : MonoBehaviour
@@ -87,7 +88,7 @@ public class Girl : MonoBehaviour
             }
             else
             {
-                this.transform.position += this.transform.forward * 3f * Time.deltaTime;
+                this.transform.position += this.transform.forward * 5f * Time.deltaTime;
             }
         }
 
@@ -100,8 +101,14 @@ public class Girl : MonoBehaviour
             }
             else
             {
-                this.transform.position += this.transform.forward * 3f * Time.deltaTime;
+                this.transform.position += this.transform.forward * 5f * Time.deltaTime;
             }
+        }
+
+        if (state == GirlState.RUN_BACK)
+        {
+            
+            this.transform.position -= this.transform.forward * 8f * Time.deltaTime;
         }
 
     }
@@ -230,11 +237,9 @@ public class Girl : MonoBehaviour
         PanelHeathBars.instance.sliderEnemy.gameObject.SetActive(true);
     }
 
-    IEnumerator Wait()
+    IEnumerator Wait(float duration)
     {
-        yield return new WaitForSeconds(2f);
-
-        // scappa/salta indietro
+        yield return new WaitForSeconds(duration);
         
         this.transform.forward = Player.instance.transform.position - 
             new Vector3(
@@ -255,7 +260,9 @@ public class Girl : MonoBehaviour
                     Player.instance.transform.position.x, 
                     Player.instance.transform.position.y,  // evitare il salto
                     Player.instance.transform.position.z);
-                state = GirlState.COMBAT_RUN_TARGET;
+    
+                state = GirlState.COMBAT_RUN_TARGET;            
+                animator.SetTrigger("run");
             }
             else
             {
@@ -268,15 +275,16 @@ public class Girl : MonoBehaviour
     public void CombatIdle()
     {
         state = GirlState.COMBAT_IDLE;
-        canGetHit = true;
         StopAllCoroutines();
-        StartCoroutine(Wait());
+        StartCoroutine(Wait(1.5f));
     }
 
     public void GetHit(float demage)
     {
         healthPoints -= demage;
         PanelHeathBars.instance.enemyHealtPoints = healthPoints;
+
+        StopAllCoroutines();
 
         if (healthPoints <= 0)
         {
@@ -302,6 +310,7 @@ public class Girl : MonoBehaviour
 
     public void Rebird()
     {
+        StopAllCoroutines();
         StartCoroutine(WaitRebird());
     }
 
@@ -309,6 +318,22 @@ public class Girl : MonoBehaviour
     {
         sphereCollider.enabled = true;
         state = GirlState.WAIT_FOR_TRAIN;
+    }
+
+    public void RunBack()
+    {
+        animator.ResetTrigger("attack");
+
+        this.transform.forward = Player.instance.transform.position - 
+            new Vector3(
+                this.transform.position.x, 
+                Player.instance.transform.position.y, 
+                this.transform.position.z);
+
+        state = GirlState.RUN_BACK;
+
+        StopAllCoroutines();
+        StartCoroutine(Wait(1.5f));
     }
 
 }

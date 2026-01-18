@@ -1,6 +1,4 @@
 - gestire meglio il combattimento
-    - se è troppo vicino prende l'avversario
-    - l'avversario può essere gethit solo in idle ?
-    - il player puù essere gethit mentre attacca?
+    - se è troppo vicino non prende l'avversario ??
     - danno sulla barra in giallo
     - aggiornare il colore della barra

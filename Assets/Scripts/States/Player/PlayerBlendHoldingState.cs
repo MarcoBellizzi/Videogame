@@ -6,7 +6,6 @@ public class PlayerBlendHoldingState : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        Player.instance.canAttack = true;
-       Player.instance.canGetHit = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

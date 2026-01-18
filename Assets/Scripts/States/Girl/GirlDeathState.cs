@@ -6,6 +6,7 @@ public class GirlDeathState : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        Girl.instance.Rebird();
+       Girl.instance.canGetHit = false;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

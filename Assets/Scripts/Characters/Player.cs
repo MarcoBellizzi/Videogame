@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool canAttackNext;
     [HideInInspector] public bool isHolding;
     [HideInInspector] public bool canGetHit;
-
+    
     // public
     [HideInInspector] public float healthPoints;
 
