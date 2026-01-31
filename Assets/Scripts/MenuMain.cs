@@ -20,7 +20,7 @@ public class MenuMain : MonoBehaviour
     public void PlayGame()
     {
         // Time.timeScale = 1;
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Villaggio2");
     }
     
     // chude l'applicazione

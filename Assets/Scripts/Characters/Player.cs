@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal.Internal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -36,7 +37,7 @@ public class Player : MonoBehaviour
     private bool run;
     private float currentSpeed;
     private bool isGrounded;
-    private bool wasGrounded;
+    private static  bool wasGrounded= false;
     private Vector3 groundDirection;
     private Vector3 airDirection;
 
@@ -132,15 +133,16 @@ public class Player : MonoBehaviour
         {
             horInput = Input.GetAxis("Horizontal");
             verInput = Input.GetAxis("Vertical");
-            jump = Input.GetKeyDown(KeyCode.Space);
+            //jump = Input.GetKeyDown(KeyCode.Space);
             run = Input.GetKey(KeyCode.LeftShift);
 
             animator.SetFloat("horInput", horInput, 0.1f, Time.deltaTime);
             animator.SetFloat("verInput", verInput, 0.1f, Time.deltaTime);
         }
-
-        wasGrounded = isGrounded;
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.01f); // da fixare meglio
+        wasGrounded = true;
+        //wasGrounded = isGrounded;
+        //isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.01f); // da fixare meglio
+        isGrounded = true;
 
 
         // è a terra
@@ -178,7 +180,7 @@ public class Player : MonoBehaviour
             }
 
             // ha appena iniziato il salto
-            if (jump)
+            if (jump && false)
             {
                 if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
                 {
@@ -234,7 +236,7 @@ public class Player : MonoBehaviour
             airDirection.y += gravityValue * Time.deltaTime;
 
             // ha iniziato a cadere o ha appena iniziato il salto
-            if (wasGrounded)
+            if (wasGrounded && false)
             {   
                 animator.SetTrigger("jump");
                 
