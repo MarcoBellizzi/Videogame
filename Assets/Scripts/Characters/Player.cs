@@ -70,8 +70,11 @@ public class Player : MonoBehaviour
     IEnumerator ShowWelcome()
     {
         yield return new WaitForSeconds(0.1f);
-        
-        PanelDialogues.instance.Show("welcome");
+
+        if (PanelDialogues.instance != null)
+        {
+            PanelDialogues.instance.Show("welcome");
+        }
     }
 
     void Update()
@@ -235,7 +238,7 @@ public class Player : MonoBehaviour
             {   
                 animator.SetTrigger("jump");
                 
-                if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
+                //if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
                 {
                     if (groundDirection != Vector3.zero)
                     {
