@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
         toFollowVirtual = GameObject.Find("ToFollow").transform;
         isGrounded = true;  // è a terra (y position nell ispector 9.980798e-05)
         canMove = false;   // per il primo menu
+        // canMove = true;   // per il primo menu
         canAttack = false;   // per il primo menu
         canAttackNext = false;  // prima inizializzazione
         isHolding = false;
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour
 
     IEnumerator ShowWelcome()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.1f); // perchè??
 
         if (PanelDialogues.instance != null)
         {

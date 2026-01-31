@@ -4,12 +4,12 @@ using System.Collections.Generic;
 public class Bag : MonoBehaviour
 {
     public static Bag instance;
-    public Dictionary<string, int> items;
+    public Dictionary<string, (string, int)> items;
 
     void Awake()
     {
         instance = this;
-        items = new Dictionary<string, int>();
+        items = new Dictionary<string, (string, int)>();
     }
 
     void Update()
@@ -30,15 +30,15 @@ public class Bag : MonoBehaviour
         }
     }
 
-    public void AddItem(string itemName)
+    public void AddItem(string itemName, string itemDescription)
     {
         if (items.ContainsKey(itemName))
         {
-            items[itemName] += 1;
+            items[itemName] = (items[itemName].Item1, items[itemName].Item2 + 1);
         }
         else
         {
-            items[itemName] = 1;
+            items[itemName] = (itemDescription, 1);
         }
     }
 
@@ -46,24 +46,24 @@ public class Bag : MonoBehaviour
     {
         if (items.ContainsKey(itemName))
         {
-            return items[itemName];
+            return items[itemName].Item2;
         }
         return 0;
     }
 
-    public void ConsumeItem(string itemName)
-    {
-        if (items.ContainsKey(itemName))
-        {
-            items[itemName]--;
-            if (items[itemName] == 0)
-            {
-                items.Remove(itemName);
-            }
-        }
-        else
-        {
-            Debug.Log("Cannot consume " + itemName);
-        }
-    }
+    // public void ConsumeItem(string itemName)
+    // {
+    //     if (items.ContainsKey(itemName))
+    //     {
+    //         items[itemName].Item2--;
+    //         if (items[itemName] == 0)
+    //         {
+    //             items.Remove(itemName);
+    //         }
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("Cannot consume " + itemName);
+    //     }
+    // }
 }

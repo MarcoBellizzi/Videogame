@@ -33,6 +33,14 @@ public class Sword : MonoBehaviour
                     Girl.instance.GetHit(20f);
                 }
             }
+            if (other.gameObject.name == "Prosos")
+            {
+                if (Prosos.instance.canGetHit)
+                {
+                    Player.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
+                    // Prosos.instance.GetHit(20f);
+                }
+            }
         }
         else
         {   
@@ -40,7 +48,8 @@ public class Sword : MonoBehaviour
             {
                 if (Player.instance.canGetHit)
                 {
-                    Girl.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
+                    // Girl.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
+                    Prosos.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
                     Player.instance.GetHit(20f);
                 }
             }

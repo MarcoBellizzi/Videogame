@@ -33,6 +33,22 @@ public class PanelChoice : MonoBehaviour
             //         ("No, ho bisogno di allenarmi", Girl.instance.Idle)
             //     })
             // }
+            {
+                "question_thaelia", ("Mi trovi tra i cavalieri e gli eroi, sto davanti, ma non cammino mai.", new List<(string, Action)> {
+                    ("Bandiera", Thaelia.instance.Talk2),
+                    ("Lancia", Thaelia.instance.Talk2),
+                    ("Scudo", Thaelia.instance.GetSchudo),
+                    ("Cavallo", Thaelia.instance.Talk2),
+                })
+            },
+            {
+                "question_ananke", ("Non è grandezza, eppure spesso appare; vive nei gesti piccoli e nei cuori che non sanno dare. Si nutre di gelosia, di ego e di rancore, chi la possiede non conosce onore.", new List<(string, Action)> {
+                    ("Spada", Ananke.instance.Talk2),
+                    ("Lussuria", Ananke.instance.Talk2),
+                    ("Meschinità", Ananke.instance.GetSpada),
+                    ("Superbia", Ananke.instance.Talk2),
+                })
+            }
         };
     }
 

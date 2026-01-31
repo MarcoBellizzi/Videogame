@@ -6,11 +6,13 @@ public class PanelObjects : MonoBehaviour
 {
     public static PanelObjects instance;
     private TextMeshProUGUI objectName;
+    private TextMeshProUGUI objectDescription;
 
     void Awake()
     {
         instance = this;
         objectName = GameObject.Find("ObjectName").GetComponent<TextMeshProUGUI>();
+        objectDescription = GameObject.Find("ObjectDescription").GetComponent<TextMeshProUGUI>();
     }
 
     void Start()
@@ -27,9 +29,10 @@ public class PanelObjects : MonoBehaviour
         }
     }
 
-    public void Show(string name)
+    public void Show(string name, string description)
     {
         objectName.text = name;
+        objectDescription.text = description;
         this.gameObject.SetActive(true);
         Player.instance.Stop();
     }

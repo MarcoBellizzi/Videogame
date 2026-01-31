@@ -7,6 +7,7 @@ using UnityEngine;
 public class CollectibleItem : MonoBehaviour
 {
     [SerializeField] private string itemName;
+    [SerializeField] private string itemDescription;
     private Canvas canvas;
     private TextMeshProUGUI content;
     private Vector3 canvasOffset;
@@ -55,8 +56,8 @@ public class CollectibleItem : MonoBehaviour
 
             if (isClicking)
             {
-                Bag.instance.AddItem(itemName);
-                PanelObjects.instance.Show(itemName);
+                Bag.instance.AddItem(itemName, itemDescription);
+                PanelObjects.instance.Show(itemName, itemDescription);
                 canvas.gameObject.SetActive(false); 
                 Destroy(this.gameObject);
             }
