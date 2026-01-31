@@ -55,10 +55,11 @@ public class Player : MonoBehaviour
         playerOrientation = GameObject.Find("Orientation").transform;
         toFollowVirtual = GameObject.Find("ToFollow").transform;
         isGrounded = true;  // è a terra (y position nell ispector 9.980798e-05)
-        canMove = false;   // per il primo menu
-        // canMove = true;   // per il primo menu
-        canAttack = false;   // per il primo menu
-        canAttackNext = false;  // prima inizializzazione
+        // canMove = false;   // per il primo menu
+        
+        canMove = GameManager.Instance.primoDiscorso;
+        canAttack = false; 
+        canAttackNext = false; 
         isHolding = false;
         healthPoints = 100f;
         canGetHit = true;
@@ -66,7 +67,12 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(ShowWelcome()); // per attivare il pannello dopo che entra nello state blend nell animator
+        if (!GameManager.Instance.primoDiscorso)
+        {
+            GameManager.Instance.primoDiscorso = true;
+            StartCoroutine(ShowWelcome()); // per attivare il pannello dopo che entra nello state blend nell animator
+        }
+
     }
 
     IEnumerator ShowWelcome()
@@ -82,17 +88,17 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        // external input
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            healthPoints -= 10f;
-        }
+        // // external input
+        // if (Input.GetKeyDown(KeyCode.Z))
+        // {
+        //     healthPoints -= 10f;
+        // }
 
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            // Girl.instance.healthPoints -= 10f;
-            PanelHeathBars.instance.enemyHealtPoints -= 10f;
-        }
+        // if (Input.GetKeyDown(KeyCode.X))
+        // {
+        //     // Girl.instance.healthPoints -= 10f;
+        //     PanelHeathBars.instance.enemyHealtPoints -= 10f;
+        // }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -140,10 +146,10 @@ public class Player : MonoBehaviour
             animator.SetFloat("horInput", horInput, 0.1f, Time.deltaTime);
             animator.SetFloat("verInput", verInput, 0.1f, Time.deltaTime);
         }
-        wasGrounded = true;
-        //wasGrounded = isGrounded;
-        //isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.01f); // da fixare meglio
-        isGrounded = true;
+        // wasGrounded = true;
+        // isGrounded = true;
+        wasGrounded = isGrounded;
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.01f); // da fixare meglio
 
 
         // è a terra
@@ -180,28 +186,28 @@ public class Player : MonoBehaviour
                 }
             }
 
-            // ha appena iniziato il salto
-            if (jump && false)
-            {
-                if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
-                {
-                    if (groundDirection != Vector3.zero)
-                    {
-                        airDirection = playerModel.forward * currentSpeed; // airDirection.y=0
-                    }
-                    else
-                    {
-                       airDirection = Vector3.zero;
-                    }
-                }
-                if (MainCamera.instance.state == CamState.LOCKONCAM)
-                {
-                    airDirection = groundDirection * currentSpeed; // airDirection.y=0
-                }
+            // // ha appena iniziato il salto
+            // if (jump && false)
+            // {
+            //     if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
+            //     {
+            //         if (groundDirection != Vector3.zero)
+            //         {
+            //             airDirection = playerModel.forward * currentSpeed; // airDirection.y=0
+            //         }
+            //         else
+            //         {
+            //            airDirection = Vector3.zero;
+            //         }
+            //     }
+            //     if (MainCamera.instance.state == CamState.LOCKONCAM)
+            //     {
+            //         airDirection = groundDirection * currentSpeed; // airDirection.y=0
+            //     }
 
-                airDirection.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
+            //     airDirection.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
 
-            }
+            // }
 
             // si sposta a terra
             if (groundDirection != Vector3.zero)
@@ -237,11 +243,11 @@ public class Player : MonoBehaviour
             airDirection.y += gravityValue * Time.deltaTime;
 
             // ha iniziato a cadere o ha appena iniziato il salto
-            if (wasGrounded && false)
+            if (wasGrounded)
             {   
-                animator.SetTrigger("jump");
+                // animator.SetTrigger("jump");
                 
-                //if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
+                if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
                 {
                     if (groundDirection != Vector3.zero)
                     {

@@ -38,7 +38,7 @@ public class Sword : MonoBehaviour
                 if (Prosos.instance.canGetHit)
                 {
                     Player.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
-                    // Prosos.instance.GetHit(20f);
+                    Prosos.instance.GetHit(20f);
                 }
             }
         }

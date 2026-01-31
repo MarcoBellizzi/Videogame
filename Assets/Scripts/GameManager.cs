@@ -3,14 +3,16 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-        public static GameManager Instance { get;private set; }
+    public static GameManager Instance { get;private set; }
 
     public int frammenti;
     public int bonusSpada;
     public float bonusScudo;
+
+    public bool primoDiscorso;
         
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         if(Instance!= null && Instance !=this)
         {
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;    
+
         DontDestroyOnLoad(gameObject);
 
         Initialize();
@@ -30,6 +33,8 @@ public class GameManager : MonoBehaviour
         //inzializza Variabili. 
         frammenti = 0;
         bonusSpada = 1;
+        
+        primoDiscorso = false;
     }
      
     public void addFrammenti()

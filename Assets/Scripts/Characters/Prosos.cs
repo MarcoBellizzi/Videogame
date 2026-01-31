@@ -55,7 +55,8 @@ public class Prosos : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {// non posso controllare il click del personaggio nel OnTriggerStay perchè viene chiamato meno dell update
+    {
+        // non posso controllare il click del personaggio nel OnTriggerStay perchè viene chiamato meno dell update
         if (Input.GetKeyDown(KeyCode.Mouse0) && !PanelChoice.instance.gameObject.activeSelf)
         {
             isClicking = true; 
@@ -91,6 +92,13 @@ public class Prosos : MonoBehaviour
 
         if (state == PrososState.COMBAT_RUN_TARGET)
         {
+
+            this.transform.forward = Player.instance.transform.position - 
+                new Vector3(
+                    this.transform.position.x, 
+                    Player.instance.transform.position.y, 
+                    this.transform.position.z);
+
             if (Vector3.Distance(this.transform.position, target) < distanceToAttack)
             {
                 state = PrososState.COMBAT_ATTACK;
@@ -105,6 +113,12 @@ public class Prosos : MonoBehaviour
         if (state == PrososState.RUN_BACK)
         {
             
+            this.transform.forward = Player.instance.transform.position - 
+                new Vector3(
+                    this.transform.position.x, 
+                    Player.instance.transform.position.y, 
+                    this.transform.position.z);
+
             this.transform.position -= this.transform.forward * 8f * Time.deltaTime;
         }
 
@@ -198,6 +212,8 @@ public class Prosos : MonoBehaviour
     public void CombatIdle()
     {
         state = PrososState.COMBAT_IDLE;
+        // animator.ResetTrigger("run");
+        // animator.ResetTrigger("attack");
         StopAllCoroutines();
         StartCoroutine(Wait(1.5f));
     }
@@ -233,5 +249,23 @@ public class Prosos : MonoBehaviour
 
         StopAllCoroutines();
         StartCoroutine(Wait(1.5f));
+    }
+
+    public void GetHit(float demage)
+    {
+        healthPoints -= demage;
+        PanelHeathBars.instance.enemyHealtPoints = healthPoints;
+
+        StopAllCoroutines();
+
+        if (healthPoints <= 0)
+        {
+            state = PrososState.DEATH;
+            animator.SetTrigger("death");
+        }
+        else
+        { 
+            animator.SetTrigger("getHit");
+        }
     }
 }

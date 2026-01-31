@@ -135,7 +135,7 @@ public class PanelDialogues : MonoBehaviour
                     // passa alla frase successiva
                     index++;
                     content.text = string.Empty;
-                    //StartCoroutine(Write(dialogues[state].Item1[index]));
+                    StartCoroutine(Write(dialogues[state].Item1[index]));
                 }
                 else
                 {
@@ -165,6 +165,7 @@ public class PanelDialogues : MonoBehaviour
         {
             content.text += c;
             yield return new WaitForSeconds(0.05f);
+            // yield return new WaitForSeconds(0.0005f);
         }
     }
 
@@ -174,7 +175,7 @@ public class PanelDialogues : MonoBehaviour
         index = 0;
         state = newState;
         this.gameObject.SetActive(true);
-        //StartCoroutine(Write(dialogues[state].Item1[index]));
+        StartCoroutine(Write(dialogues[state].Item1[index]));
     }
 
 }

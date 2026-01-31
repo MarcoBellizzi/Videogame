@@ -59,6 +59,7 @@ public class CollectibleItem : MonoBehaviour
                 Bag.instance.AddItem(itemName, itemDescription);
                 PanelObjects.instance.Show(itemName, itemDescription);
                 canvas.gameObject.SetActive(false); 
+                GameManager.Instance.addFrammenti();
                 Destroy(this.gameObject);
             }
         }
