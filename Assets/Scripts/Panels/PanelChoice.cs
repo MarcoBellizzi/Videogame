@@ -27,12 +27,12 @@ public class PanelChoice : MonoBehaviour
 
         choises = new Dictionary<string, (string, List<(string, Action)>)>
         {
-        //    {
-        //        "train", ("Vuoi affrontarmi in combattimento?", new List<(string, Action)> {
-        //            ("Si, affrontiamoci", Girl.instance.Unsheathe),
-        //            ("No, ho bisogno di allenarmi", Girl.instance.Idle)
-        //        })
-        //    }
+            // {
+            //     "train", ("Vuoi affrontarmi in combattimento?", new List<(string, Action)> {
+            //         ("Si, affrontiamoci", Girl.instance.Unsheathe),
+            //         ("No, ho bisogno di allenarmi", Girl.instance.Idle)
+            //     })
+            // }
         };
     }
 

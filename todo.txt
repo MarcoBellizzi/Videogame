@@ -2,3 +2,5 @@
     - se è troppo vicino non prende l'avversario ??
     - danno sulla barra in giallo
     - aggiornare il colore della barra
+
+- testare il branch
