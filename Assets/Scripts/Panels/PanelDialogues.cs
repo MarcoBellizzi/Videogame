@@ -131,8 +131,8 @@ public class PanelDialogues : MonoBehaviour
             },
             {
                 "npc21", (new List<(string, string)> {
-                    ("Marcous", "Sai, in questi giorni ho sentito che si aggira da queste parti un tipo mascherato... "),
-                    ("Marcous", "Dicono che quella maschera somigli proprio a quelle del 2020, io starei attento"),
+                    ("Marcous", "Fai attenzione, nella foresta ci sono ancora residui di pioggia acida."),
+                    ("Marcous", "Ora non è più pericolosa però tieni gli occhi aperti."),
                 }, NPC2.instance.GiveMask)
             },
             {
@@ -143,7 +143,7 @@ public class PanelDialogues : MonoBehaviour
             {
                 "npc31", (new List<(string, string)> {
                     ("Gresia", "Soter, da quanto tempo! Sai, l'altro giorno ti ho visto parlare con Ananke..."),
-                    ("Gresia", "Io non mi sono mai fidato di quell'uomo, mi ha sempre dato l'idea di essere un uomo molto meschino... "),
+                    ("Gresia", "Io non mi sono mai fidata di quell'uomo, mi ha sempre dato l'idea di essere un uomo molto meschino... "),
                     ("Gresia", "Fai attenzione a chi scegli di avere affianco, figlio di Dio. Ora è dall'oracolo qui vicino, cercava qualcuno."),
                 }, NPC3.instance.GiveMask)
             },
