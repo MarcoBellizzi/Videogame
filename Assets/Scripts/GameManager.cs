@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         frammenti++;
         if (frammenti == 7)
         {
-            //evento maschera totale
+            Player.instance.mask.SetActive(true);
         }
         
 

@@ -118,6 +118,19 @@ public class PanelDialogues : MonoBehaviour
                     ("Soter", "No Prosos, fammi spiegare!"),
                 }, Prosos.instance.StartFight)
             },
+            {
+                "npc11", (new List<(string, string)> {
+                    ("Soter", "PROSOS! Ma... Com'è possibile? Ti ho visto morire davanti ai miei occhi..."),
+                    ("Prosos", "Soter, amico mio, è il momento di fare i conti con il passato."),
+                    ("Prosos", "Quella notte non sono morto, anzi, sono rinato"),
+                    ("Prosos", "con questi poteri potrò finalmente farti pagare il giusto pegno per i tuoi errori passati, per il tuo abbandono."),
+                    ("Soter", "Sono stato costretto da Ananke a dare la maschera a sua figlia..."),
+                    ("Soter", "L'ironia delle sorte ha voluto che ci sposassimo, il dolore di quella notte ci ha uniti."),
+                    ("Prosos", "So tutto, Soter! In questi quindici anni ho indossato questa maschera per osservare indisturbato le storture del mondo."),
+                    ("Prosos", "Adesso siamo alla resa dei conti, battiamoci e paga col sangue."),
+                    ("Soter", "No Prosos, fammi spiegare!"),
+                }, Prosos.instance.StartFight)
+            },
         };
 
     }

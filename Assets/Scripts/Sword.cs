@@ -51,6 +51,8 @@ public class Sword : MonoBehaviour
                     // Girl.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
                     Prosos.instance.sword.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
                     Player.instance.GetHit(20f);
+
+                    Prosos.instance.transform.position -= this.transform.forward * 2f * Time.deltaTime;
                 }
             }
         }

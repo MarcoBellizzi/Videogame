@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
 
     // setted from unity
     [SerializeField] public Transform playerModel;
+    [SerializeField] public GameObject mask;
     [SerializeField] public Transform sword;
     [SerializeField] public Transform swordPoint;
     [SerializeField] public Transform rightHandPoint;

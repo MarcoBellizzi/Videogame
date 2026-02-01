@@ -2666,6 +2666,7 @@ MonoBehaviour:
   canGetHit: 0
   healthPoints: 0
   playerModel: {fileID: 3035597769930329038}
+  mask: {fileID: 2525047897596930423}
   sword: {fileID: 5147417712814763671}
   swordPoint: {fileID: 782796052439243072}
   rightHandPoint: {fileID: 2529553620603475187}
@@ -5908,6 +5909,7 @@ MonoBehaviour:
   sword: {fileID: 4334748452859122189}
   swordPoint: {fileID: 8656805394372516683}
   rightHandPoint: {fileID: 1365281273243642152}
+  playerModel: {fileID: 0}
   healthPoints: 100
   canGetHit: 0
 --- !u!1 &5588148128306073765
@@ -10263,6 +10265,12 @@ PrefabInstance:
 --- !u!4 &2525047897596730229 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 469146, guid: b2b6d96047db11c48b2e829e16ca0cce,
+    type: 3}
+  m_PrefabInstance: {fileID: 2525047897597064175}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2525047897596930423 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 137880, guid: b2b6d96047db11c48b2e829e16ca0cce,
     type: 3}
   m_PrefabInstance: {fileID: 2525047897597064175}
   m_PrefabAsset: {fileID: 0}

@@ -19,6 +19,8 @@ public class Prosos : MonoBehaviour
     [SerializeField] public Transform sword;
     [SerializeField] public Transform swordPoint;
     [SerializeField] public Transform rightHandPoint;
+    
+    [SerializeField] public Transform playerModel;
     public float healthPoints;
     [HideInInspector] public bool canGetHit;
     private PrososState state;
@@ -36,14 +38,13 @@ public class Prosos : MonoBehaviour
     {
         instance = this;
         state = PrososState.WAIT_FOR_TALK;
-        // state = GirlState.WAIT_FOR_TRAIN;
         animator = GetComponentInChildren<Animator>();
         canvas = GameObject.Find("CanvasOnTop").GetComponent<Canvas>();
         content = GameObject.Find("TextOnTop").GetComponent<TextMeshProUGUI>();
         canvasOffset = new Vector3(0, 2.1f, 0);
         sphereCollider = GetComponent<SphereCollider>();
         isClicking = false;
-        healthPoints = 100f;
+        healthPoints = 387f;
         canGetHit = false;
     }
 
@@ -69,51 +70,82 @@ public class Prosos : MonoBehaviour
 
         if (state == PrososState.COMBAT_RUN)
         {
+            
+            StopAllCoroutines();
+
+            Debug.Log("stato run");
             this.transform.forward = Player.instance.transform.position - 
                 new Vector3(
                     this.transform.position.x, 
                     Player.instance.transform.position.y, 
                     this.transform.position.z);
 
-            if (Vector3.Distance(this.transform.position, Player.instance.transform.position) < distanceToTarget)
-            {
-                target = new Vector3(
-                    Player.instance.transform.position.x, 
-                    Player.instance.transform.position.y,  // evitare il salto
-                    Player.instance.transform.position.z);
-
-                state = PrososState.COMBAT_RUN_TARGET;
-            }
-            else
-            {
-                this.transform.position += this.transform.forward * 5f * Time.deltaTime;
-            }
-        }
-
-        if (state == PrososState.COMBAT_RUN_TARGET)
-        {
-
-            this.transform.forward = Player.instance.transform.position - 
+            this.playerModel.forward = Player.instance.transform.position - 
                 new Vector3(
                     this.transform.position.x, 
                     Player.instance.transform.position.y, 
                     this.transform.position.z);
 
-            if (Vector3.Distance(this.transform.position, target) < distanceToAttack)
+            if (Vector3.Distance(this.transform.position, Player.instance.transform.position) <= distanceToAttack)
             {
+                
+                Debug.Log("stato Attack");
                 state = PrososState.COMBAT_ATTACK;
                 animator.SetTrigger("attack");
             }
+            // if (Vector3.Distance(this.transform.position, Player.instance.transform.position) <= distanceToTarget)
+            // {
+            //     Debug.Log("meno distance to target");
+
+            //     target = new Vector3(
+            //         Player.instance.transform.position.x, 
+            //         Player.instance.transform.position.y,  // evitare il salto
+            //         Player.instance.transform.position.z);
+
+            //     state = PrososState.COMBAT_RUN_TARGET;
+            // }
             else
             {
+                Debug.Log("avanza");
                 this.transform.position += this.transform.forward * 5f * Time.deltaTime;
             }
         }
 
+        // if (state == PrososState.COMBAT_RUN_TARGET)
+        // {
+        //     Debug.Log("run>target");
+
+            
+        //     StopAllCoroutines();
+
+        //     this.transform.forward = Player.instance.transform.position - 
+        //         new Vector3(
+        //             this.transform.position.x, 
+        //             Player.instance.transform.position.y, 
+        //             this.transform.position.z);
+
+        //     if (Vector3.Distance(this.transform.position, target) <= distanceToAttack)
+        //     {
+        //         Debug.Log("stato Attack");
+        //         state = PrososState.COMBAT_ATTACK;
+        //         animator.SetTrigger("attack");
+        //     }
+        //     else
+        //     {
+        //         this.transform.position += this.transform.forward * 5f * Time.deltaTime;
+        //     }
+        // }
+
         if (state == PrososState.RUN_BACK)
         {
-            
+            Debug.Log("run back");
             this.transform.forward = Player.instance.transform.position - 
+                new Vector3(
+                    this.transform.position.x, 
+                    Player.instance.transform.position.y, 
+                    this.transform.position.z);
+
+            this.playerModel.forward = Player.instance.transform.position - 
                 new Vector3(
                     this.transform.position.x, 
                     Player.instance.transform.position.y, 
@@ -184,28 +216,34 @@ public class Prosos : MonoBehaviour
                 Player.instance.transform.position.y, 
                 this.transform.position.z);
 
-        if (Vector3.Distance(this.transform.position, Player.instance.transform.position) > distanceToTarget)
+        if (Vector3.Distance(this.transform.position, Player.instance.transform.position) > distanceToAttack)
         {
+            Debug.Log("insegui 194");
             state = PrososState.COMBAT_RUN;
             animator.SetTrigger("run");
         }
         else
         {
-            if (Vector3.Distance(this.transform.position, Player.instance.transform.position) > distanceToAttack)
-            {
-                target = new Vector3(
-                    Player.instance.transform.position.x, 
-                    Player.instance.transform.position.y,  // evitare il salto
-                    Player.instance.transform.position.z);
+            // if (Vector3.Distance(this.transform.position, Player.instance.transform.position) > distanceToAttack)
+            // {
+            //     Debug.Log("torunTurget");
+            //     target = new Vector3(
+            //         Player.instance.transform.position.x, 
+            //         Player.instance.transform.position.y,  // evitare il salto
+            //         Player.instance.transform.position.z);
     
-                state = PrososState.COMBAT_RUN_TARGET;            
-                animator.SetTrigger("run");
-            }
-            else
-            {
-                state = PrososState.COMBAT_ATTACK;
-                animator.SetTrigger("attack");
-            }
+            //     state = PrososState.COMBAT_RUN_TARGET;            
+            //     animator.SetTrigger("run");
+            // }
+            // else
+            // {
+            //     state = PrososState.COMBAT_ATTACK;
+            //     animator.SetTrigger("attack");
+            // }
+
+            
+            state = PrososState.COMBAT_ATTACK;
+            animator.SetTrigger("attack");
         }
     }
 
@@ -237,7 +275,7 @@ public class Prosos : MonoBehaviour
 
     public void RunBack()
     {
-        animator.ResetTrigger("attack");
+        // animator.ResetTrigger("attack");
 
         this.transform.forward = Player.instance.transform.position - 
             new Vector3(
@@ -248,7 +286,7 @@ public class Prosos : MonoBehaviour
         state = PrososState.RUN_BACK;
 
         StopAllCoroutines();
-        StartCoroutine(Wait(1.5f));
+        StartCoroutine(Wait(0.2f));
     }
 
     public void GetHit(float demage)
