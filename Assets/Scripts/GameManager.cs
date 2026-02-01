@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     public float bonusScudo;
 
     public bool primoDiscorso;
+
+    public int scena;
+    public bool completata;
         
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -33,8 +36,9 @@ public class GameManager : MonoBehaviour
         //inzializza Variabili. 
         frammenti = 0;
         bonusSpada = 1;
-        
         primoDiscorso = false;
+        scena = 1;
+        completata = false;
     }
      
     public void addFrammenti()
@@ -43,6 +47,7 @@ public class GameManager : MonoBehaviour
         if (frammenti == 7)
         {
             Player.instance.mask.SetActive(true);
+            completata = true;
         }
     }
 

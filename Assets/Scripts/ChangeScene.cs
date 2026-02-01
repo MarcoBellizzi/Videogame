@@ -35,6 +35,7 @@ public class ChangeScene : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(nextScene))
         {
+            GameManager.Instance.scena += 1;
             SceneManager.LoadScene(nextScene);
         }
         else

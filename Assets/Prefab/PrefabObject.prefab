@@ -679,7 +679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7ea7de21963b04fbd04aa17585a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Pezzo Maschera 3
+  itemName: Frammento Maschera 3
   itemDescription: "Dall\u2019alluvione la tecnologia regred\xEC a quella dell\u2019antica
     Grecia e i superstiti si aggrapparono al mito, ma le persone si adattarono e
     delle maschere non si ebbe pi\xF9 notizia."
@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 0.1, z: -4}
+  m_FollowOffset: {x: 0, y: 2.9999998, z: -3.0000002}
   m_XDamping: 1
   m_YDamping: 0
   m_ZDamping: 0
@@ -1879,8 +1879,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110972874018617947}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.007288472, y: 0.97617817, z: 0.03320178, w: -0.21429114}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.13194652, y: 0.8666411, z: -0.31263408, w: 0.3657639}
+  m_LocalPosition: {x: -0.00002527237, y: 0, z: -0.000022888184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2517,8 +2517,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398132523629203673}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0026795615, y: 0.9766664, z: -0.012206429, w: -0.21439831}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.14882904, y: 0.85114825, z: -0.3525571, w: 0.3593051}
+  m_LocalPosition: {x: -0.00002527237, y: 0, z: -0.000022888184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3685,7 +3685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7ea7de21963b04fbd04aa17585a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Pezzo Maschera 1
+  itemName: Frammeto Maschera 1
   itemDescription: "Nel 2020 un\u2019alluvione tossica ha ridotto la popolazione
     del 70% e solo pochi fortunati riuscirono a sopravvivere grazie ad una maschera
     speciale che li ha protetti."
@@ -4368,7 +4368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7ea7de21963b04fbd04aa17585a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Pezzo Maschera 2
+  itemName: Frammeto Maschera 2
   itemDescription: "I sopravvissuti si sono forniti di una maschera composta da fibra
     di Cupro con Tecnezio e Ittrio, elementi che combinati insieme garantiscono la
     protezione dalla tossicit\xE0 dell\u2019aria."
@@ -5228,7 +5228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7ea7de21963b04fbd04aa17585a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Pezzo Maschera 6
+  itemName: Frammento Maschera 6
   itemDescription: Prosos sembra essere ancora vivo, ma non si sa in che condizioni
     sia. Ha inoltre inviato una lettera molto ambigua della quale non si sa nulla.
 --- !u!1 &4854026134405986035
@@ -5290,7 +5290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 0.1, z: -4}
+  m_FollowOffset: {x: 0, y: 2.9999998, z: -3.0000002}
   m_XDamping: 1
   m_YDamping: 0
   m_ZDamping: 0
@@ -5472,8 +5472,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5090576760761442169}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15687843, y: -0.7110487, z: 0.16785589, w: 0.6645475}
-  m_LocalPosition: {x: 2.2808666, y: 1.8590002, z: 74.160126}
+  m_LocalRotation: {x: 0.1568784, y: -0.7110487, z: 0.16785584, w: 0.6645475}
+  m_LocalPosition: {x: 2.280868, y: 1.8590001, z: 74.160126}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5565,7 +5565,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.664
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5661,7 +5661,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761b07491a80a5f4a8c3ea653bbdd47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sottofondo: {fileID: 8300000, guid: f882b430beab1df47b7257f4a2af52c3, type: 3}
+  sottofondo1: {fileID: 8300000, guid: 2dc17ecab6d7ef9458fa34069c609298, type: 3}
+  sottofondo2: {fileID: 8300000, guid: 77d7d49cd2bb8074bb1ac1284ad09427, type: 3}
+  sottofondo3: {fileID: 8300000, guid: f882b430beab1df47b7257f4a2af52c3, type: 3}
 --- !u!1 &5121211452158132986
 GameObject:
   m_ObjectHideFlags: 3
@@ -5687,8 +5689,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5121211452158132986}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0023158789, y: 0.9766857, z: 0.010549716, w: -0.21440256}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.14039801, y: 0.85915273, z: -0.33264598, w: 0.3626177}
+  m_LocalPosition: {x: -0.00002527237, y: 0, z: -0.000022888184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5940,8 +5942,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5588148128306073765}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.007288468, y: 0.9761782, z: 0.03320177, w: -0.2142911}
-  m_LocalPosition: {x: -0.034573793, y: -0.04100001, z: 77.52221}
+  m_LocalRotation: {x: 0.14882904, y: 0.85114825, z: -0.3525571, w: 0.3593051}
+  m_LocalPosition: {x: -3.8597562, y: 2.8589997, z: 75.9825}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6220,7 +6222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 0.1, z: -4}
+  m_FollowOffset: {x: 0, y: 2.9999998, z: -3.0000002}
   m_XDamping: 1
   m_YDamping: 0
   m_ZDamping: 0
@@ -6587,7 +6589,7 @@ Transform:
   m_GameObject: {fileID: 6733894592075448894}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.034570694, y: -0.04099989, z: 77.52221}
+  m_LocalPosition: {x: -3.859731, y: 2.8589997, z: 75.98252}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6636,7 +6638,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0
+    Value: 0.9999998
     m_SpeedMode: 0
     m_MaxSpeed: 20
     m_AccelTime: 0.2
@@ -7499,7 +7501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7ea7de21963b04fbd04aa17585a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Pezzo Maschera 4
+  itemName: Frammento Maschera 4
   itemDescription: "Prosos, amico d\u2019infanzia di Soter, \xE8 stato dato per morto,
     essendo stato costretto da An\xE0nke a rinunciare alla maschera per darla a Th\xE0leia,
     sua figlia, adesso moglie di Soter."
@@ -8647,7 +8649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7ea7de21963b04fbd04aa17585a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Pezzo Maschera 5
+  itemName: Frammento Maschera 5
   itemDescription: "Prima dell\u2019alluvione, Soter e Prosos erano grandi amici
     nonostante Prosos nascondesse un grande malessere mai espresso, che lo portava
     a serbare rancore per Soter."
@@ -9541,7 +9543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7ea7de21963b04fbd04aa17585a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Pezzo Maschera 7
+  itemName: Frammento Maschera 7
   itemDescription: "Stai attento Soter, lo scontro che stai per affrontare non sar\xE0
     solo fisico, ma una vera e propria resa dei conti. Affronta le tue colpe e salva
     il tuo amico dall\u2019oscurit\xE0."

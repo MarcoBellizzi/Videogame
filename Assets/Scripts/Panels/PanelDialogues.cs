@@ -120,16 +120,37 @@ public class PanelDialogues : MonoBehaviour
             },
             {
                 "npc11", (new List<(string, string)> {
-                    ("Soter", "PROSOS! Ma... Com'è possibile? Ti ho visto morire davanti ai miei occhi..."),
-                    ("Prosos", "Soter, amico mio, è il momento di fare i conti con il passato."),
-                    ("Prosos", "Quella notte non sono morto, anzi, sono rinato"),
-                    ("Prosos", "con questi poteri potrò finalmente farti pagare il giusto pegno per i tuoi errori passati, per il tuo abbandono."),
-                    ("Soter", "Sono stato costretto da Ananke a dare la maschera a sua figlia..."),
-                    ("Soter", "L'ironia delle sorte ha voluto che ci sposassimo, il dolore di quella notte ci ha uniti."),
-                    ("Prosos", "So tutto, Soter! In questi quindici anni ho indossato questa maschera per osservare indisturbato le storture del mondo."),
-                    ("Prosos", "Adesso siamo alla resa dei conti, battiamoci e paga col sangue."),
-                    ("Soter", "No Prosos, fammi spiegare!"),
-                }, Prosos.instance.StartFight)
+                    ("Faustus", "Il divino è con noi anche se siamo soli, Soter."),
+                    ("Faustus", "Sento che hai una missione da compiere, avrai bisogno di aiuto, prendi questa."),
+                }, NPC1.instance.GiveMask)
+            },
+            {
+                "npc12", (new List<(string, string)> {
+                    ("Faustus", "Stai attento Soter"),
+                },  NPC1.instance.Idle)
+            },
+            {
+                "npc21", (new List<(string, string)> {
+                    ("Marcous", "Sai, in questi giorni ho sentito che si aggira da queste parti un tipo mascherato... "),
+                    ("Marcous", "Dicono che quella maschera somigli proprio a quelle del 2020, io starei attento"),
+                }, NPC2.instance.GiveMask)
+            },
+            {
+                "npc22", (new List<(string, string)> {
+                    ("Marcous", "Non fidarti di nessuno."),
+                },  NPC2.instance.Idle)
+            },
+            {
+                "npc31", (new List<(string, string)> {
+                    ("Gresia", "Soter, da quanto tempo! Sai, l'altro giorno ti ho visto parlare con Ananke..."),
+                    ("Gresia", "Io non mi sono mai fidato di quell'uomo, mi ha sempre dato l'idea di essere un uomo molto meschino... "),
+                    ("Gresia", "Fai attenzione a chi scegli di avere affianco, figlio di Dio. Ora è dall'oracolo qui vicino, cercava qualcuno."),
+                }, NPC3.instance.GiveMask)
+            },
+            {
+                "npc32", (new List<(string, string)> {
+                    ("Gresia", "Abbi cura di te"),
+                },  NPC3.instance.Idle)
             },
         };
 

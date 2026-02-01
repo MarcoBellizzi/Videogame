@@ -58,7 +58,6 @@ public class Player : MonoBehaviour
         isGrounded = true;  // è a terra (y position nell ispector 9.980798e-05)
         // canMove = false;   // per il primo menu
         
-        canMove = GameManager.Instance.primoDiscorso;
         canAttack = false; 
         canAttackNext = false; 
         isHolding = false;
@@ -68,6 +67,14 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+
+        canMove = GameManager.Instance.primoDiscorso;
+
+        if (GameManager.Instance.completata)
+        {
+            instance.mask.SetActive(true);
+        }
+
         if (!GameManager.Instance.primoDiscorso)
         {
             GameManager.Instance.primoDiscorso = true;

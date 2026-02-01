@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum PrososState
 {
@@ -260,11 +261,13 @@ public class Prosos : MonoBehaviour
     {
         yield return new WaitForSeconds(6f);
         
-        healthPoints = 100f;
-        PanelHeathBars.instance.sliderEnemy.maxValue = healthPoints;
-        PanelHeathBars.instance.enemyHealtPoints = healthPoints;
-        PanelHeathBars.instance.sliderEnemy.gameObject.SetActive(false);
-        animator.SetTrigger("rebird");
+        // healthPoints = 100f;
+        // PanelHeathBars.instance.sliderEnemy.maxValue = healthPoints;
+        // PanelHeathBars.instance.enemyHealtPoints = healthPoints;
+        // PanelHeathBars.instance.sliderEnemy.gameObject.SetActive(false);
+        // animator.SetTrigger("rebird");
+        
+        SceneManager.LoadScene("Menu");
     }
 
     public void Rebird()
