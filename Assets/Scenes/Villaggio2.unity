@@ -6659,22 +6659,22 @@ PrefabInstance:
     - target: {fileID: 3265985119102100153, guid: 97462191c8f39374a843cf3db7a516ac,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.024101257
       objectReference: {fileID: 0}
     - target: {fileID: 3265985119102100153, guid: 97462191c8f39374a843cf3db7a516ac,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.008694081
       objectReference: {fileID: 0}
     - target: {fileID: 3265985119102100153, guid: 97462191c8f39374a843cf3db7a516ac,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.9403592
       objectReference: {fileID: 0}
     - target: {fileID: 3265985119102100153, guid: 97462191c8f39374a843cf3db7a516ac,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.3392171
       objectReference: {fileID: 0}
     - target: {fileID: 3321094237956431899, guid: 97462191c8f39374a843cf3db7a516ac,
         type: 3}
@@ -12533,12 +12533,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953498222}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0052917814, y: -0.011394948, z: -0.0070348196, w: -0.99989635}
-  m_LocalPosition: {x: 10.727, y: 0.74, z: -0.84}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 9.3132246e-10, y: 0.49005803, z: 7.275957e-11, w: 0.8716898}
+  m_LocalPosition: {x: 84.78519, y: 22.37239, z: 18.76425}
+  m_LocalScale: {x: 1.2595139, y: 1.0000505, z: 1.0001359}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1449967882}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 58.689, z: 0}
 --- !u!114 &953498224
 MonoBehaviour:
@@ -12552,7 +12552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b2456463bfc1f4b9108f3fdc544c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextScene: Percorso
+  nextScene: Percorso2
   loadOnlyOnce: 1
   delay: 0
 --- !u!65 &953498225
@@ -18299,11 +18299,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4208458315195486, guid: c96016c34e7be62488e588470988ef5b,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 953498223}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1839786891944690, guid: c96016c34e7be62488e588470988ef5b,
         type: 3}
@@ -29240,6 +29236,7 @@ SceneRoots:
   - {fileID: 1830574651}
   - {fileID: 1740991177}
   - {fileID: 1703863884}
+  - {fileID: 953498223}
   - {fileID: 1066566350}
   - {fileID: 53444463}
   - {fileID: 956939992}
