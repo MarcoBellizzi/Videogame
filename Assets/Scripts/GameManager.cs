@@ -44,9 +44,9 @@ public class GameManager : MonoBehaviour
         {
             Player.instance.mask.SetActive(true);
         }
-        
-
     }
+
+    
     public void setBonusScudo()
     {
         bonusScudo = 1.5f;
