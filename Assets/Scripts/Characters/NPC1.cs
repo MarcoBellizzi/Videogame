@@ -118,9 +118,9 @@ public class NPC1 : MonoBehaviour
 
     public void GiveMask()
     {
+        GameManager.Instance.addFrammenti();
         Bag.instance.AddItem("Frammeto Maschera 1", "Nel 2020 un'alluvione tossica ha ridotto la popolazione del 70% e solo pochi fortunati riuscirono a sopravvivere grazie ad una maschera speciale che li ha protetti.");
         PanelObjects.instance.Show("Frammeto Maschera 1", "Nel 2020 un'alluvione tossica ha ridotto la popolazione del 70% e solo pochi fortunati riuscirono a sopravvivere grazie ad una maschera speciale che li ha protetti.");
-        GameManager.Instance.addFrammenti();
         Idle();
     }
 
