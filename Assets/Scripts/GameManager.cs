@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
         {
             Player.instance.mask.SetActive(true);
             completata = true;
+            PanelObjects.instance.Show("Maschera completa", "Hai completato la maschera");
+            Bag.instance.AddItem("Maschera completa", "Hai completato la maschera");
         }
     }
 

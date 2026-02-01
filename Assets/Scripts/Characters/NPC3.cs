@@ -119,9 +119,10 @@ public class NPC3 : MonoBehaviour
 
     public void GiveMask()
     {
+        GameManager.Instance.addFrammenti();
         Bag.instance.AddItem("Frammeto Maschera 3", "Dall'alluvione la tecnologia regredì a quella dell'antica Grecia e i superstiti si aggrapparono al mito, ma le persone si adattarono e delle maschere non si ebbe più notizia.");
         PanelObjects.instance.Show("Frammeto Maschera 3", "Dall'alluvione la tecnologia regredì a quella dell'antica Grecia e i superstiti si aggrapparono al mito, ma le persone si adattarono e delle maschere non si ebbe più notizia.");
-        GameManager.Instance.addFrammenti();
+        
         Idle();
     }
 }

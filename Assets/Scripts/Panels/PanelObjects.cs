@@ -33,6 +33,12 @@ public class PanelObjects : MonoBehaviour
     {
         objectName.text = name;
         objectDescription.text = description;
+
+        if (GameManager.Instance.completata)
+        {
+            objectName.text = "Maschera completa";
+        }
+
         this.gameObject.SetActive(true);
         Player.instance.Stop();
     }

@@ -118,9 +118,10 @@ public class NPC2 : MonoBehaviour
 
     public void GiveMask()
     {
+        GameManager.Instance.addFrammenti();
         Bag.instance.AddItem("Frammeto Maschera 2", "I sopravvissuti si sono forniti di una maschera composta da fibra di Cupro con Tecnezio e Ittrio, elementi che combinati insieme garantiscono la protezione dalla tossicità dell'aria.");
         PanelObjects.instance.Show("Frammeto Maschera 2", "I sopravvissuti si sono forniti di una maschera composta da fibra di Cupro con Tecnezio e Ittrio, elementi che combinati insieme garantiscono la protezione dalla tossicità dell'aria.");
-        GameManager.Instance.addFrammenti();
+        
         Idle();
     }
 }
