@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal.Internal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
 
     // setted from unity
     [SerializeField] public Transform playerModel;
+    [SerializeField] public GameObject mask;
     [SerializeField] public Transform sword;
     [SerializeField] public Transform swordPoint;
     [SerializeField] public Transform rightHandPoint;
@@ -36,7 +38,7 @@ public class Player : MonoBehaviour
     private bool run;
     private float currentSpeed;
     private bool isGrounded;
-    private bool wasGrounded;
+    private static  bool wasGrounded= false;
     private Vector3 groundDirection;
     private Vector3 airDirection;
 
@@ -54,9 +56,10 @@ public class Player : MonoBehaviour
         playerOrientation = GameObject.Find("Orientation").transform;
         toFollowVirtual = GameObject.Find("ToFollow").transform;
         isGrounded = true;  // è a terra (y position nell ispector 9.980798e-05)
-        canMove = false;   // per il primo menu
-        canAttack = false;   // per il primo menu
-        canAttackNext = false;  // prima inizializzazione
+        // canMove = false;   // per il primo menu
+        
+        canAttack = false; 
+        canAttackNext = false; 
         isHolding = false;
         healthPoints = 100f;
         canGetHit = true;
@@ -64,12 +67,25 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(ShowWelcome()); // per attivare il pannello dopo che entra nello state blend nell animator
+
+        canMove = GameManager.Instance.primoDiscorso;
+
+        if (GameManager.Instance.completata)
+        {
+            instance.mask.SetActive(true);
+        }
+
+        if (!GameManager.Instance.primoDiscorso)
+        {
+            GameManager.Instance.primoDiscorso = true;
+            StartCoroutine(ShowWelcome()); // per attivare il pannello dopo che entra nello state blend nell animator
+        }
+
     }
 
     IEnumerator ShowWelcome()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.1f); // perchè??
 
         if (PanelDialogues.instance != null)
         {
@@ -80,17 +96,17 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        // external input
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            healthPoints -= 10f;
-        }
+        // // external input
+        // if (Input.GetKeyDown(KeyCode.Z))
+        // {
+        //     healthPoints -= 10f;
+        // }
 
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            // Girl.instance.healthPoints -= 10f;
-            PanelHeathBars.instance.enemyHealtPoints -= 10f;
-        }
+        // if (Input.GetKeyDown(KeyCode.X))
+        // {
+        //     // Girl.instance.healthPoints -= 10f;
+        //     PanelHeathBars.instance.enemyHealtPoints -= 10f;
+        // }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -132,13 +148,14 @@ public class Player : MonoBehaviour
         {
             horInput = Input.GetAxis("Horizontal");
             verInput = Input.GetAxis("Vertical");
-            jump = Input.GetKeyDown(KeyCode.Space);
+            //jump = Input.GetKeyDown(KeyCode.Space);
             run = Input.GetKey(KeyCode.LeftShift);
 
             animator.SetFloat("horInput", horInput, 0.1f, Time.deltaTime);
             animator.SetFloat("verInput", verInput, 0.1f, Time.deltaTime);
         }
-
+        // wasGrounded = true;
+        // isGrounded = true;
         wasGrounded = isGrounded;
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.01f); // da fixare meglio
 
@@ -177,28 +194,28 @@ public class Player : MonoBehaviour
                 }
             }
 
-            // ha appena iniziato il salto
-            if (jump)
-            {
-                if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
-                {
-                    if (groundDirection != Vector3.zero)
-                    {
-                        airDirection = playerModel.forward * currentSpeed; // airDirection.y=0
-                    }
-                    else
-                    {
-                       airDirection = Vector3.zero;
-                    }
-                }
-                if (MainCamera.instance.state == CamState.LOCKONCAM)
-                {
-                    airDirection = groundDirection * currentSpeed; // airDirection.y=0
-                }
+            // // ha appena iniziato il salto
+            // if (jump && false)
+            // {
+            //     if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
+            //     {
+            //         if (groundDirection != Vector3.zero)
+            //         {
+            //             airDirection = playerModel.forward * currentSpeed; // airDirection.y=0
+            //         }
+            //         else
+            //         {
+            //            airDirection = Vector3.zero;
+            //         }
+            //     }
+            //     if (MainCamera.instance.state == CamState.LOCKONCAM)
+            //     {
+            //         airDirection = groundDirection * currentSpeed; // airDirection.y=0
+            //     }
 
-                airDirection.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
+            //     airDirection.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
 
-            }
+            // }
 
             // si sposta a terra
             if (groundDirection != Vector3.zero)
@@ -236,9 +253,9 @@ public class Player : MonoBehaviour
             // ha iniziato a cadere o ha appena iniziato il salto
             if (wasGrounded)
             {   
-                animator.SetTrigger("jump");
+                // animator.SetTrigger("jump");
                 
-                //if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
+                if (MainCamera.instance.state == CamState.FREE_LOOK_CAM)
                 {
                     if (groundDirection != Vector3.zero)
                     {

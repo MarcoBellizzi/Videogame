@@ -5,8 +5,8 @@ public class GirlDeathState : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       Girl.instance.Rebird();
-       Girl.instance.canGetHit = false;
+       Prosos.instance.Rebird();
+       Prosos.instance.canGetHit = false;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

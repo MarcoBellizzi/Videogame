@@ -29,8 +29,8 @@ public class PanelBag : MonoBehaviour
             content.text = "";
             foreach (var key in Bag.instance.items.Keys)
             {
-                content.text += Bag.instance.items[key];
-                content.text += " ";
+                content.text += Bag.instance.items[key].Item2;
+                content.text += " - ";
                 content.text += key;
                 content.text += "\n";
             }

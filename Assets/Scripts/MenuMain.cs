@@ -15,12 +15,13 @@ public class MenuMain : MonoBehaviour
     {
         source.clip = sottofondo;
         source.Play();
+
+        GameManager.Instance.scena = 1;
     }
 
     public void PlayGame()
     {
-        // Time.timeScale = 1;
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Villaggio2");
     }
     
     // chude l'applicazione

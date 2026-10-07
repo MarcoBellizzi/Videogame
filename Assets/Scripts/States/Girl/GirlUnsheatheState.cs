@@ -17,7 +17,7 @@ public class GirlUnsheatheState : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       Girl.instance.canGetHit = true;
+       Prosos.instance.canGetHit = true;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

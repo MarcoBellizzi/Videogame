@@ -6,7 +6,7 @@ public class GirlRunBackState : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        animator.SetLayerWeight(1, 1f);
-       Girl.instance.RunBack();
+       Prosos.instance.RunBack();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
